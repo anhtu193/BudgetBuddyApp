@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green">#FF03A700</color>
+    <color name="date">#FF004368</color>
+    <color name="note">#FF5E5E5E</color>
+    <color name="earn">#FF00BD40</color>
+    <color name="spend">#FFFF1D1D</color>
+    <color name="uncheck">#FF676767</color>
 </resources>

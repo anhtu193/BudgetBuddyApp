@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#DEDEDE">
+    <RelativeLayout
+        android:id="@+id/titleTransactionInfo"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:background="@color/green"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/close"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Giao dịch"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/edit"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="20dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/delete"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="19dp"
+            android:layout_marginLeft="20dp"/>
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="359dp"
+        android:layout_height="256dp"
+        app:layout_constraintTop_toBottomOf="@id/titleTransactionInfo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/border_radius_7"
+        android:layout_marginTop="14dp">
+
+        <ImageView
+            android:id="@+id/categoryIcon"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginLeft="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/food"/>
+
+        <TextView
+            android:id="@+id/categoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ăn uống"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/categoryIcon"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="21dp"/>
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="500,000"
+            android:textSize="20sp"
+            android:textColor="@color/spend"
+            app:layout_constraintTop_toBottomOf="@id/categoryName"
+            app:layout_constraintLeft_toRightOf="@id/categoryIcon"
+            android:fontFamily="@font/montserrat_medium"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="17dp"/>
+
+        <ImageView
+            android:id="@+id/dateIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="105dp"
+            android:layout_marginLeft="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/date"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5-10-2023"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/dateIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="111dp"
+            android:layout_marginLeft="16dp"/>
+
+        <ImageView
+            android:id="@+id/timeIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="154dp"
+            android:layout_marginLeft="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/time"/>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:08"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/dateIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="159dp"
+            android:layout_marginLeft="16dp"/>
+
+        <ImageView
+            android:id="@+id/noteIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="203dp"
+            android:layout_marginLeft="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/note"/>
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lương thực tháng 7"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textColor="@color/note"
+            app:layout_constraintLeft_toRightOf="@id/noteIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="208dp"
+            android:layout_marginLeft="16dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
