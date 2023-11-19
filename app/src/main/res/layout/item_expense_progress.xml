@@ -38,6 +38,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Ăn uống"
+                android:fontFamily="@font/montserrat_medium"
                 android:textSize="18sp"
                 android:textColor="@color/black"/>
 
@@ -46,6 +47,7 @@
                 android:layout_gravity="center_horizontal|center"
                 android:gravity="center"
                 android:textSize="20sp"
+                android:fontFamily="@font/montserrat_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="October - 2023"
@@ -71,6 +73,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_width="0dp"
+                android:fontFamily="@font/montserrat_semibold"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="1,000,000"/>
@@ -79,6 +82,7 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/green"
+                android:fontFamily="@font/montserrat_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5,000,000"/>

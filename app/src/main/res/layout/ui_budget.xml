@@ -24,6 +24,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="50dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Ngân sách"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -50,6 +51,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:fontFamily="@font/montserrat_semibold"
                         android:text="SỐ DƯ"
                         android:textSize="15sp"
                         android:textColor="@color/black"/>
@@ -57,6 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
+                        android:fontFamily="@font/montserrat_bold"
                         android:layout_gravity="center"
                         android:text="9,999,250 đ"
                         android:textSize="20sp"
@@ -83,6 +86,7 @@
                             android:layout_weight="1"
                             android:text="Mục tiêu"
                             android:textSize="24sp"
+                            android:fontFamily="@font/montserrat_bold"
                             android:textStyle="bold"
                             android:textColor="@color/black"/>
 
@@ -94,6 +98,7 @@
                             android:paddingRight="12dp"
                             android:paddingBottom="7dp"
                             android:text="THÊM"
+                            android:fontFamily="@font/montserrat_bold"
                             android:backgroundTint="@color/green"
                             android:textSize="16sp"
                             android:textStyle="bold"

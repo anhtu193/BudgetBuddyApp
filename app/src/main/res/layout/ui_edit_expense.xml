@@ -37,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Giới hạn chi tiêu"
+                    android:fontFamily="@font/montserrat_bold"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"/>
@@ -102,6 +103,7 @@
                                 android:textSize="20sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_bold"
                                 android:text="Ăn uống"
                                 android:textColor="@color/black"/>
 
@@ -110,6 +112,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="5,000,000 đ"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
                                 android:layout_marginTop="8dp"
@@ -130,12 +133,14 @@
                                         android:layout_weight="1"
                                         android:layout_height="wrap_content"
                                         android:text="Chi tiêu"
+                                        android:fontFamily="@font/montserrat_medium"
                                         android:textSize="18sp" />
 
                                     <TextView
                                         android:layout_gravity="center_horizontal|center"
                                         android:gravity="center"
                                         android:textSize="18sp"
+                                        android:fontFamily="@font/montserrat_medium"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Giới hạn"/>
@@ -161,12 +166,14 @@
                                         android:textColor="@color/black"
                                         android:layout_width="0dp"
                                         android:layout_weight="1"
+                                        android:fontFamily="@font/montserrat_semibold"
                                         android:layout_height="wrap_content"
                                         android:text="1,000,000"/>
 
                                     <TextView
                                         android:textSize="16sp"
                                         android:textColor="@color/black"
+                                        android:fontFamily="@font/montserrat_semibold"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="4,000,000"/>
@@ -196,11 +203,13 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Chỉ tháng này"
+                                            android:fontFamily="@font/montserrat_semibold"
                                             android:textStyle="bold"
                                             android:textColor="@color/black"/>
 
                                         <TextView
                                             android:textSize="12sp"
+                                            android:fontFamily="@font/montserrat_regular"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Còn lại 23 ngày"/>

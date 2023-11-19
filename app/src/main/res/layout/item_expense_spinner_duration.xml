@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@color/black"
+    android:fontFamily="@font/montserrat_semibold"
     android:textStyle="bold"
     android:padding="8dp"
     android:text="This month only">

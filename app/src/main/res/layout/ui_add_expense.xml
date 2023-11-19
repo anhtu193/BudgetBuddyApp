@@ -36,6 +36,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:text="Giới hạn chi tiêu"
                     android:textSize="24sp"
@@ -94,11 +95,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Ăn uống"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:textColor="@color/black"/>
 
                             <TextView
                                 android:textSize="14sp"
                                 android:layout_width="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:layout_height="wrap_content"
                                 android:text="Đặt giới hạn chi tiêu cho danh mục này"
                                 />
@@ -109,6 +112,7 @@
                                 android:textColorHint="@color/input_text"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:background="@drawable/custom_input"
                                 android:hint="Giới hạn chi tiêu"
                                 android:padding="16dp"
@@ -140,6 +144,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="SỐ DƯ"
+                            android:fontFamily="@font/montserrat_bold"
                             android:textColor="@color/black"/>
 
                         <TextView
@@ -148,6 +153,7 @@
                             android:layout_height="wrap_content"
                             android:text="9,999,250 đ"
                             android:textStyle="bold"
+                            android:fontFamily="@font/montserrat_semibold"
                             android:textColor="@color/black"/>
 
                     </LinearLayout>

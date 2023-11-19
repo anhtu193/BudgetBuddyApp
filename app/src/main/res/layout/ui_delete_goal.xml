@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XÓA MỤC TIÊU"
+            android:fontFamily="@font/montserrat_bold"
             android:textColor="@color/green"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -32,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bạn có muốn xóa mục tiêu này không?"
+            android:fontFamily="@font/montserrat_regular"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
 
@@ -45,6 +47,7 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/red"
+                android:fontFamily="@font/montserrat_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Xóa"
@@ -53,6 +56,7 @@
             <TextView
                 android:textStyle="bold"
                 android:textSize="16sp"
+                android:fontFamily="@font/montserrat_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hủy bỏ"/>
