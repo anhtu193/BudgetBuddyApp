@@ -1,0 +1,94 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ellipse" />
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:src="@drawable/restaurant"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="13dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Ăn uống"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal|center"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="October - 2023"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/custom_progress_bg"
+            android:layout_marginTop="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="1,000,000"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/green"
+                android:fontFamily="@font/montserrat_semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5,000,000"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

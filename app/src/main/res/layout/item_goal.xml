@@ -1,0 +1,75 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="24dp">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ellipse" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/smartphone"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="13dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="Iphone 15 Pro Max"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/custom_progress_bg"
+            android:layout_marginTop="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/green"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_semibold"
+                android:layout_height="wrap_content"
+                android:text="17,500,000"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/montserrat_semibold"
+                android:layout_height="wrap_content"
+                android:text="35,000,000"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

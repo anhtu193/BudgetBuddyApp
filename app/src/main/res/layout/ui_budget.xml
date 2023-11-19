@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Ngân sách"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="32dp"
+                android:paddingRight="24dp">
+
+                <!-- Balance -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="13dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="SỐ DƯ"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:layout_gravity="center"
+                        android:text="9,999,250 đ"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+                <!-- Goals -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center"
+                            android:layout_weight="1"
+                            android:text="Mục tiêu"
+                            android:textSize="24sp"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="12dp"
+                            android:paddingTop="7dp"
+                            android:paddingRight="12dp"
+                            android:paddingBottom="7dp"
+                            android:text="THÊM"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:backgroundTint="@color/green"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                    <!-- Item -->
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <!-- Expense caps -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="21dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:text="Giới hạn chi tiêu"
+                        android:textColor="@color/black"/>
+
+                    <!--                Item -->
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
