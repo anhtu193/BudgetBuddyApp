@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">BudgetBuddyApp</string>
+    <string name="welcome">Chào mừng bạn!</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="incorrect">Email hoặc mật khẩu sai</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="or">Hoặc</string>
+    <string name="signup">Không có tài khoản? Đăng ký</string>
+    <string name="register">Đăng ký</string>
+    <string name="create_count">Tạo tài khoản mới của bạn</string>
+    <string name="fullname">Họ và tên</string>
+    <string name="retype_password">Nhập lại mật khẩu</string>
+    <string name="signin">Đã có tài khoản? Đăng nhập</string>
+    <string name="incorrect_retype_password">Mật khẩu nhập lại không chính xác</string>
 </resources>
