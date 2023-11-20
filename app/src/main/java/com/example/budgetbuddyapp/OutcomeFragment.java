@@ -18,7 +18,9 @@ import com.example.budgetbuddyapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -60,28 +62,30 @@ public class OutcomeFragment extends Fragment {
 
         fStore.collection("categories")
                 .whereEqualTo("userID", userID)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .whereEqualTo("categoryType", "Chi tiêu") // Lọc dữ liệu theo điều kiện categoryType
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            String categoryType = documentSnapshot.getString("categoryType");
-                            if (categoryType.equals("Chi tiêu"))
-                            {
-                                String categoryID = documentSnapshot.getId();
-                                String categoryName = documentSnapshot.getString("categoryName");
-                                Number categoryImageIndex = documentSnapshot.getLong("categoryImage");
-                                int categoryImage = categoryImageIndex.intValue();
-                                categoryList.add(new Category(categoryID, userID, categoryName, categoryType, categoryImage));
-                                adapter = new CategoryAdapter(getActivity(),R.layout.category_item, categoryList);
-                                listView.setAdapter(adapter);
-                            }
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.w(TAG, "Listen failed.", error);
+                            return;
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: +" + e.toString());
+
+                        categoryList.clear(); // Xóa dữ liệu cũ trước khi cập nhật mới
+                        for (QueryDocumentSnapshot document : value) {
+                            String categoryID = document.getId();
+                            String categoryName = document.getString("categoryName");
+                            Number categoryImageIndex = document.getLong("categoryImage");
+                            int categoryImage = categoryImageIndex.intValue();
+                            categoryList.add(new Category(categoryID, userID, categoryName, "Thu nhập", categoryImage));
+                        }
+
+                        if (adapter == null) {
+                            adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList);
+                            listView.setAdapter(adapter);
+                        } else {
+                            adapter.notifyDataSetChanged(); // Cập nhật ListView nếu adapter đã được khởi tạo trước đó
+                        }
                     }
                 });
 
