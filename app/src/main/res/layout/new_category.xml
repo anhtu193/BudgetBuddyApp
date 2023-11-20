@@ -114,6 +114,9 @@
         <GridView
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:numColumns="5"
+            android:verticalSpacing="15dp"
+            android:id="@+id/gridview"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="50dp"/>

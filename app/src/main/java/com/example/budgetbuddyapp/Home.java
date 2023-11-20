@@ -3,6 +3,7 @@ package com.example.budgetbuddyapp;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.text.DecimalFormat;
 
 public class Home extends AppCompatActivity {
     TextView fullName, balance, categoryNumber, goalNumber, budgetNumber;
-    ImageView hideBalance;
+    ImageView hideBalance, notification;
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
@@ -37,6 +38,8 @@ public class Home extends AppCompatActivity {
         budgetNumber = findViewById(R.id.budgetNumber);
         goalNumber = findViewById(R.id.goalNumber);
         hideBalance = findViewById(R.id.hideBalance);
+        notification = findViewById(R.id.imgViewNotification);
+
         final boolean[] isPasswordVisible = {false};
 
         auth = FirebaseAuth.getInstance();
@@ -75,6 +78,12 @@ public class Home extends AppCompatActivity {
                     balance.setTransformationMethod(null);
                     isPasswordVisible[0] = true;
                 }
+            }
+        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Home.this, Category.class ));
             }
         });
     }

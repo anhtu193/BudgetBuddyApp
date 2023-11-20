@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/backBtn"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_marginLeft="20dp"
@@ -33,6 +34,7 @@
 
     </RelativeLayout>
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         app:layout_constraintTop_toBottomOf="@id/titleTransactionTypeInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +54,14 @@
             android:text="THU NHẬP"/>
     </com.google.android.material.tabs.TabLayout>
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,6 +70,7 @@
         android:layout_marginRight="27dp"
         app:backgroundTint="#03A700"
         app:maxImageSize="30dp"
+        android:id="@+id/addNewCategoryBtn"
         android:src="@drawable/add"
         android:layout_marginBottom="36dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

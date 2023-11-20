@@ -14,4 +14,6 @@
     <string name="retype_password">Nhập lại mật khẩu</string>
     <string name="signin">Đã có tài khoản? Đăng nhập</string>
     <string name="incorrect_retype_password">Mật khẩu nhập lại không chính xác</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
