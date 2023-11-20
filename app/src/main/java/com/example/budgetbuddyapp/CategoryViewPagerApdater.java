@@ -18,9 +18,9 @@ public class CategoryViewPagerApdater extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (position == 1)
         {
-            return new OutcomeFragment();
+            return new IncomeFragment();
         }
-        return new IncomeFragment();
+        return new OutcomeFragment();
     }
 
     @Override

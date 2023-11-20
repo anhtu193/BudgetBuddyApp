@@ -1,77 +1,57 @@
 package com.example.budgetbuddyapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager2.widget.ViewPager2;
+public class Category {
+    private String categoryID;
+    private String userID;
+    private String categoryName;
+    private String categoryType;
+    private int categoryImage;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
+    public String getCategoryID() {
+        return categoryID;
+    }
 
-import com.example.budgetbuddyapp.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
+    }
 
-public class Category extends AppCompatActivity {
+    public String getUserID() {
+        return userID;
+    }
 
-    ImageView backBtn;
-    TabLayout tabLayout;
-    ViewPager2 viewPager2;
-    CategoryViewPagerApdater adapter;
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
-    FloatingActionButton addNewCategory;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.category_home);
+    public String getCategoryName() {
+        return categoryName;
+    }
 
-        backBtn = findViewById(R.id.backBtn);
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager2 = findViewById(R.id.viewPager);
-        addNewCategory = findViewById(R.id.addNewCategoryBtn);
-//        tabLayout.addTab(tabLayout.newTab().setText("CHI TIÊU"));
-//        tabLayout.addTab(tabLayout.newTab().setText("THU NHẬP"));
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        adapter = new CategoryViewPagerApdater(fragmentManager, getLifecycle());
-        viewPager2.setAdapter(adapter);
+    public String getCategoryType() {
+        return categoryType;
+    }
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
-            }
+    public void setCategoryType(String categoryType) {
+        this.categoryType = categoryType;
+    }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+    public int getCategoryImage() {
+        return categoryImage;
+    }
 
-            }
+    public void setCategoryImage(int categoryImage) {
+        this.categoryImage = categoryImage;
+    }
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
-
-        addNewCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Category.this, AddNewCategory.class ));
-            }
-        });
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    public Category(String categoryID, String userID, String categoryName, String categoryType, int categoryImage) {
+        this.categoryID = categoryID;
+        this.userID = userID;
+        this.categoryName = categoryName;
+        this.categoryType = categoryType;
+        this.categoryImage = categoryImage;
     }
 }

@@ -15,7 +15,7 @@
             android:name=".AddNewCategory"
             android:exported="false" />
         <activity
-            android:name=".Category"
+            android:name=".CategoryHome"
             android:exported="false" />
         <activity
             android:name=".Login"

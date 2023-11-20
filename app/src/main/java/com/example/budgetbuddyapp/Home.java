@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +16,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import java.text.DecimalFormat;
 
 public class Home extends AppCompatActivity {
     TextView fullName, balance, categoryNumber, goalNumber, budgetNumber;
@@ -83,7 +80,7 @@ public class Home extends AppCompatActivity {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Home.this, Category.class ));
+                startActivity(new Intent(Home.this, CategoryHome.class ));
             }
         });
     }
