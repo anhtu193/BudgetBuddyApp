@@ -27,14 +27,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class IncomeFragment extends Fragment {
+public class IncomeFragment extends Fragment{
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
 
     ListView listView;
     ArrayList<Category> categoryList;
-
+    CategoryAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class IncomeFragment extends Fragment {
                                 Number categoryImageIndex = documentSnapshot.getLong("categoryImage");
                                 int categoryImage = categoryImageIndex.intValue();
                                 categoryList.add(new Category(categoryID, userID, categoryName, categoryType, categoryImage));
-                                CategoryAdapter adapter = new CategoryAdapter(getActivity(),R.layout.category_item, categoryList);
+                                adapter = new CategoryAdapter(getActivity(),R.layout.category_item, categoryList);
                                 listView.setAdapter(adapter);
                             }
                         }
@@ -86,8 +86,7 @@ public class IncomeFragment extends Fragment {
                         Log.d(TAG, "onFailure: +" + e.toString());
                     }
                 });
-
-
-
     }
+
+
 }

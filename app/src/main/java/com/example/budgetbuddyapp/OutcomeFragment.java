@@ -32,7 +32,7 @@ public class OutcomeFragment extends Fragment {
 
     ListView listView;
     ArrayList<Category> categoryList;
-
+    CategoryAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class OutcomeFragment extends Fragment {
                                 Number categoryImageIndex = documentSnapshot.getLong("categoryImage");
                                 int categoryImage = categoryImageIndex.intValue();
                                 categoryList.add(new Category(categoryID, userID, categoryName, categoryType, categoryImage));
-                                CategoryAdapter adapter = new CategoryAdapter(getActivity(),R.layout.category_item, categoryList);
+                                adapter = new CategoryAdapter(getActivity(),R.layout.category_item, categoryList);
                                 listView.setAdapter(adapter);
                             }
                         }

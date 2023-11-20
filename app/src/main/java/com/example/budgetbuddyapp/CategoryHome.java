@@ -18,7 +18,6 @@ public class CategoryHome extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     CategoryViewPagerApdater adapter;
-
     FloatingActionButton addNewCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +35,12 @@ public class CategoryHome extends AppCompatActivity {
         adapter = new CategoryViewPagerApdater(fragmentManager, getLifecycle());
         viewPager2.setAdapter(adapter);
 
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager2.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
@@ -63,7 +64,8 @@ public class CategoryHome extends AppCompatActivity {
         addNewCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CategoryHome.this, AddNewCategory.class ));
+                startActivity(new Intent(CategoryHome.this, AddNewCategory.class));
+
             }
         });
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -73,4 +75,5 @@ public class CategoryHome extends AppCompatActivity {
             }
         });
     }
+
 }
