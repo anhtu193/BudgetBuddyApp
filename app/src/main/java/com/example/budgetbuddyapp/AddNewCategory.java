@@ -1,25 +1,50 @@
 package com.example.budgetbuddyapp;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.budgetbuddyapp.databinding.NewCategoryBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddNewCategory extends AppCompatActivity {
 
     NewCategoryBinding binding;
+    FirebaseAuth auth;
+    FirebaseFirestore fStore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = NewCategoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        final String[] iconURL = {""};
+        auth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        String userID = auth.getCurrentUser().getUid();
+
+        final String[] iconURL = {"drawable/food.png"};
+        final Boolean[] isOutcome = {true};
 
         //Copy array này đến toàn bộ những nơi cần fetch dữ liệu từ Firestore về
         int[] categoryImages = {R.drawable.food, R.drawable.c_electricitybill, R.drawable.c_fuel, R.drawable.c_clothes,
@@ -38,6 +63,76 @@ public class AddNewCategory extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 binding.categoryIcon.setImageResource(categoryImages[position]);
                 iconURL[0] = categoryImagesString[position];
+            }
+        });
+
+        binding.spinnerIncomeOutcome.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                if (item.equals("Chi tiêu"))
+                {
+                    isOutcome[0] = true;
+                } else if (item.equals("Thu nhập"))
+                {
+                    isOutcome[0] = false;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ArrayList<String> spinner_choice = new ArrayList<>();
+        spinner_choice.add("Chi tiêu");
+        spinner_choice.add("Thu nhập");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinner_choice);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        binding.spinnerIncomeOutcome.setAdapter(adapter);
+
+        binding.closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        binding.addNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (binding.inputCategoryName.getText().toString().equals(""))
+                {
+                    Toast.makeText(AddNewCategory.this, "Vui lòng nhập tên loại chi tiêu!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("userID", userID);
+                    data.put("categoryName", binding.inputCategoryName.getText().toString());
+                    data.put("categoryImage", iconURL[0]);
+                    if (isOutcome[0] = true)
+                    {
+                        data.put("categoryType", "Chi tiêu");
+                    } else
+                    {
+                        data.put("categoryType", "Thu nhập");
+                    }
+
+                    fStore.collection("categories").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "onSuccess: category created with ID: " + documentReference.getId());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "onFailure: +" + e.toString());
+                        }
+                    });
+
+                    finish();
+                }
+
             }
         });
     }
