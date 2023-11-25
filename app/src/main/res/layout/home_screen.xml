@@ -86,6 +86,7 @@
                     android:layout_marginLeft="20dp"/>
                 
                 <ImageView
+                    android:id="@+id/hideBalance"
                     android:layout_width="27dp"
                     android:layout_height="27dp"
                     android:src="@drawable/balance_visible"
@@ -130,7 +131,7 @@
                     android:layout_marginLeft="20dp"/>
 
                 <TextView
-                    android:id="@+id/capNumber"
+                    android:id="@+id/budgetNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
