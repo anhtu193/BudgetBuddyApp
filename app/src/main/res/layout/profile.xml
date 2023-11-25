@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/txtViewProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:fontFamily="@font/montserrat_bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:id="@+id/txtViewUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lý Thanh Tú Anh"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:fontFamily="@font/montserrat_bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="114dp" />
+
+    <TextView
+        android:id="@+id/txtViewEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email@gmail.com"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:fontFamily="@font/montserrat_regular"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewUserName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="6dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/editprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/txtViewEmail"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="33dp" >
+
+        <ImageView
+            android:id="@+id/icon_editprofile"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/profileuser"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/txtView_editprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/editprofile"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingStart="12dp"
+            app:layout_constraintLeft_toRightOf="@id/icon_editprofile"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="25dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/changepassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/editprofile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="33dp" >
+
+        <ImageView
+            android:id="@+id/icon_changepassword"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/padlock"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/txtView_changepassword"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/changepassword"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingStart="12dp"
+            app:layout_constraintLeft_toRightOf="@id/icon_changepassword"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="25dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/changepassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="38dp" >
+
+        <ImageView
+            android:id="@+id/icon_logout"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/logout"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/txtView_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/logout"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingStart="8dp"
+            app:layout_constraintLeft_toRightOf="@id/icon_logout"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="25dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="50dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelVisibilityMode="labeled"
+                android:layout_marginEnd="16dp"
+                app:itemIconTint="@drawable/bottom_navigation_selector"
+                app:itemTextColor="@drawable/bottom_navigation_selector"
+                app:menu="@menu/nav_menu" />
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add"
+            app:layout_anchor="@id/bottomAppBar"
+            app:backgroundTint="#03A700"
+            app:maxImageSize="30dp"
+            app:borderWidth="0dp"
+            android:id="@+id/addNewTransaction"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
