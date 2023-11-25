@@ -11,10 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Bundle;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 public class Login extends AppCompatActivity {
@@ -47,7 +45,7 @@ public class Login extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
                                         Toast.makeText(Login.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(Login.this, MainActivity.class ));
+                                        startActivity(new Intent(Login.this, Home.class ));
                                         finish();
 
                                     }
