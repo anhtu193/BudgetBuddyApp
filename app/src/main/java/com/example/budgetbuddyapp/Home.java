@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class Home extends AppCompatActivity {
     TextView fullName, balance, categoryNumber, goalNumber, budgetNumber;
-    ImageView hideBalance, notification;
+    ImageView hideBalance, notification, addNewTransaction;
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
@@ -36,6 +36,7 @@ public class Home extends AppCompatActivity {
         goalNumber = findViewById(R.id.goalNumber);
         hideBalance = findViewById(R.id.hideBalance);
         notification = findViewById(R.id.imgViewNotification);
+        addNewTransaction = findViewById(R.id.addNewTransaction);
 
         final boolean[] isPasswordVisible = {false};
 

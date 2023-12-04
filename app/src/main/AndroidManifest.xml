@@ -15,7 +15,19 @@
             android:name=".AddNewCategory"
             android:exported="false" />
         <activity
+            android:name=".AddNewExpense"
+            android:exported="false" />
+        <activity
+            android:name=".ExpenseEdit"
+            android:exported="false" />
+        <activity
             android:name=".CategoryHome"
+            android:exported="false" />
+        <activity
+            android:name=".BudgetHome"
+            android:exported="false" />
+        <activity
+            android:name=".ExpenseEditScreen"
             android:exported="false" />
         <activity
             android:name=".Login"

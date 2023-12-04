@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/gray">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/green"
+                android:paddingTop="50dp"
+                android:paddingBottom="12dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:id="@+id/closeButton"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/reject__1_"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Giới hạn chi tiêu"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <ImageView
+                    android:id="@+id/editButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/pen__1_"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="23dp"/>
+
+                <ImageView
+                    android:id="@+id/deleteButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/trash"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/category_shape"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/expenseImage"
+                                android:layout_width="49dp"
+                                android:layout_height="49dp"
+                                android:src="@drawable/food"
+                                android:layout_gravity="center"/>
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="18dp">
+
+                            <TextView
+                                android:id="@+id/expenseName"
+                                android:textSize="20sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:text="Ăn uống"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:id="@+id/expenseLimit"
+                                android:textSize="20sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5,000,000 đ"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:text="Chi tiêu"
+                                        android:fontFamily="@font/montserrat_medium"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_gravity="center_horizontal|center"
+                                        android:gravity="center"
+                                        android:textSize="18sp"
+                                        android:fontFamily="@font/montserrat_medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Giới hạn chi tiêu"/>
+
+                                </LinearLayout>
+
+                                <ProgressBar
+                                    android:layout_width="match_parent"
+                                    android:layout_height="6dp"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:progressDrawable="@drawable/custom_progress_bg"
+                                    android:layout_marginTop="6dp"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="5dp">
+
+                                    <TextView
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:textColor="@color/black"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserrat_semibold"
+                                        android:layout_height="wrap_content"
+                                        android:text="1,000,000"/>
+
+                                    <TextView
+                                        android:id="@+id/expenseLimitRemaining"
+                                        android:textSize="16sp"
+                                        android:textColor="@color/black"
+                                        android:fontFamily="@font/montserrat_semibold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="4,000,000"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="23dp">
+
+                                    <ImageView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/calendar__1_"
+                                        android:layout_marginRight="17dp"
+                                        android:layout_gravity="center_horizontal|center"/>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/expenseTime"
+                                            android:textSize="14sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Chỉ tháng này"
+                                            android:fontFamily="@font/montserrat_semibold"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/black"/>
+
+                                        <TextView
+                                            android:id="@+id/expenseTimeRemaining"
+                                            android:textSize="12sp"
+                                            android:fontFamily="@font/montserrat_regular"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Còn lại 23 ngày"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
