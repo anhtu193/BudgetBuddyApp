@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp;
+package com.example.budgetbuddyapp.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.example.budgetbuddyapp.R;
 
 public class CategoryGridViewAdapter extends BaseAdapter {
     Context context;

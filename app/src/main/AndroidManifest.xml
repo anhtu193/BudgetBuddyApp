@@ -12,10 +12,16 @@
         android:theme="@style/Theme.BudgetBuddyApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddNewCategory"
+            android:name=".transaction.AddNewTransaction"
             android:exported="false" />
         <activity
-            android:name=".CategoryHome"
+            android:name=".category.EditCategory"
+            android:exported="false" />
+        <activity
+            android:name=".category.AddNewCategory"
+            android:exported="false" />
+        <activity
+            android:name=".category.CategoryHome"
             android:exported="false" />
         <activity
             android:name=".Login"

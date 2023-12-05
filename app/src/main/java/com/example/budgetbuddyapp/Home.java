@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.budgetbuddyapp.category.CategoryHome;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -18,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class Home extends AppCompatActivity {
-    TextView fullName, balance, categoryNumber, goalNumber, budgetNumber;
+    TextView fullName, balance, categoryNumber, goalNumber, budgetNumber, categoryViewAll;
     ImageView hideBalance, notification;
     FirebaseAuth auth;
     FirebaseFirestore fStore;
@@ -36,6 +37,7 @@ public class Home extends AppCompatActivity {
         goalNumber = findViewById(R.id.goalNumber);
         hideBalance = findViewById(R.id.hideBalance);
         notification = findViewById(R.id.imgViewNotification);
+        categoryViewAll = findViewById(R.id.categoryViewAll);
 
         final boolean[] isPasswordVisible = {false};
 
@@ -77,7 +79,7 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
-        notification.setOnClickListener(new View.OnClickListener() {
+        categoryViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Home.this, CategoryHome.class ));

@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp;
+package com.example.budgetbuddyapp.category;
 
 import static android.content.ContentValues.TAG;
 
@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.budgetbuddyapp.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.budgetbuddyapp.category.Category;
+import com.example.budgetbuddyapp.category.CategoryAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,7 +25,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class OutcomeFragment extends Fragment {
     FirebaseAuth auth;
@@ -52,6 +51,7 @@ public class OutcomeFragment extends Fragment {
         categoryList = new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.listview);
 
+        //copy dãy này cho toàn bộ các chức năng chọn hình ảnh
         int[] categoryImages = {R.drawable.food, R.drawable.c_electricitybill, R.drawable.c_fuel, R.drawable.c_clothes,
                 R.drawable.c_bonus, R.drawable.c_shopping, R.drawable.c_book, R.drawable.c_salary, R.drawable.c_wallet,
                 R.drawable.c_phone, R.drawable.c_celebration, R.drawable.c_makeup, R.drawable.c_celebration2, R.drawable.c_basketball, R.drawable.c_gardening};
@@ -81,7 +81,7 @@ public class OutcomeFragment extends Fragment {
                         }
 
                         if (adapter == null) {
-                            adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList);
+                            adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList, getContext());
                             listView.setAdapter(adapter);
                         } else {
                             adapter.notifyDataSetChanged(); // Cập nhật ListView nếu adapter đã được khởi tạo trước đó

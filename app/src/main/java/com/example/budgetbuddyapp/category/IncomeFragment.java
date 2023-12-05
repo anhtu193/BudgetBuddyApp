@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp;
+package com.example.budgetbuddyapp.category;
 
 import static android.content.ContentValues.TAG;
 
@@ -15,10 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.budgetbuddyapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.budgetbuddyapp.category.Category;
+import com.example.budgetbuddyapp.category.CategoryAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,7 +25,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class IncomeFragment extends Fragment{
     FirebaseAuth auth;
@@ -83,7 +80,7 @@ public class IncomeFragment extends Fragment{
                         }
 
                         if (adapter == null) {
-                            adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList);
+                            adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList, getContext());
                             listView.setAdapter(adapter);
                         } else {
                             adapter.notifyDataSetChanged(); // Cập nhật ListView nếu adapter đã được khởi tạo trước đó

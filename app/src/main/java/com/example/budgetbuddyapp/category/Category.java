@@ -1,6 +1,8 @@
-package com.example.budgetbuddyapp;
+package com.example.budgetbuddyapp.category;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
     private String categoryID;
     private String userID;
     private String categoryName;
