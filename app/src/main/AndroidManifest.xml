@@ -15,13 +15,13 @@
             android:name=".transaction.AddNewTransaction"
             android:exported="false" />
         <activity
-            android:name=".category.EditCategory"
+            android:name=".categories.EditCategory"
             android:exported="false" />
         <activity
-            android:name=".category.AddNewCategory"
+            android:name=".categories.AddNewCategory"
             android:exported="false" />
         <activity
-            android:name=".category.CategoryHome"
+            android:name=".categories.CategoryHome"
             android:exported="false" />
         <activity
             android:name=".Login"

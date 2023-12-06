@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp.category;
+package com.example.budgetbuddyapp.categories;
 
 import static android.content.ContentValues.TAG;
 
@@ -13,10 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.budgetbuddyapp.R;
-import com.example.budgetbuddyapp.category.Category;
-import com.example.budgetbuddyapp.category.CategoryAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,7 +49,8 @@ public class IncomeFragment extends Fragment{
         userID = auth.getCurrentUser().getUid();
         categoryList = new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.listview);
-
+        TextView noItem = (TextView) view.findViewById(R.id.noItem);
+        //copy dãy này cho toàn bộ các chức năng chọn hình ảnh
         int[] categoryImages = {R.drawable.food, R.drawable.c_electricitybill, R.drawable.c_fuel, R.drawable.c_clothes,
                 R.drawable.c_bonus, R.drawable.c_shopping, R.drawable.c_book, R.drawable.c_salary, R.drawable.c_wallet,
                 R.drawable.c_phone, R.drawable.c_celebration, R.drawable.c_makeup, R.drawable.c_celebration2, R.drawable.c_basketball, R.drawable.c_gardening};
@@ -78,7 +78,12 @@ public class IncomeFragment extends Fragment{
                             int categoryImage = categoryImageIndex.intValue();
                             categoryList.add(new Category(categoryID, userID, categoryName, "Thu nhập", categoryImage));
                         }
-
+                        if (categoryList.isEmpty()) {
+                            noItem.setVisibility(View.VISIBLE);
+                        } else
+                        {
+                            noItem.setVisibility(View.GONE);
+                        }
                         if (adapter == null) {
                             adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList, getContext());
                             listView.setAdapter(adapter);
@@ -87,6 +92,8 @@ public class IncomeFragment extends Fragment{
                         }
                     }
                 });
+
+
     }
 
 

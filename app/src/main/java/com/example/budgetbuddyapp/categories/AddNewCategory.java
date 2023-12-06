@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp.category;
+package com.example.budgetbuddyapp.categories;
 
 import static android.content.ContentValues.TAG;
 
@@ -106,6 +106,7 @@ public class AddNewCategory extends AppCompatActivity {
                     data.put("userID", userID);
                     data.put("categoryName", binding.inputCategoryName.getText().toString());
                     data.put("categoryImage", iconURL[0]);
+                    data.put("isSelected", false);
                     if (isOutcome[0] == true)
                     {
                         data.put("categoryType", "Chi tiêu");
@@ -117,6 +118,23 @@ public class AddNewCategory extends AppCompatActivity {
                     fStore.collection("categories").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
+                            // Lấy ID của document được tạo
+                            String documentId = documentReference.getId();
+
+                            // Cập nhật document với trường 'id' là documentId
+                            fStore.collection("categories").document(documentId).update("categoryId", documentId)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "Document ID updated successfully.");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(TAG, "Failed to update document ID: " + e.toString());
+                                        }
+                                    });
                             Log.d(TAG, "onSuccess: category created with ID: " + documentReference.getId());
                         }
                     }).addOnFailureListener(new OnFailureListener() {

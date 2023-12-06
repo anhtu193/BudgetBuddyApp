@@ -2,19 +2,46 @@
     android:layout_width="match_parent"
     android:layout_height="407dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
+    android:orientation="vertical"
+    android:background="@color/gray">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabMode="fixed" />
+        android:orientation="horizontal" >
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            app:tabTextColor="@color/green"
+            app:tabIndicatorColor="@color/green">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+                android:text="CHI TIÊU"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="THU NHẬP"/>
+        </com.google.android.material.tabs.TabLayout>
+
+        <ImageView
+            android:id="@+id/categorySettings"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/setting" />
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </LinearLayout>

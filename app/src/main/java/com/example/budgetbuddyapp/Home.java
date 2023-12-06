@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.budgetbuddyapp.category.CategoryHome;
+import com.example.budgetbuddyapp.categories.CategoryHome;
+import com.example.budgetbuddyapp.transaction.AddNewTransaction;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,6 +26,7 @@ public class Home extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
+    FloatingActionButton addNewTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class Home extends AppCompatActivity {
         hideBalance = findViewById(R.id.hideBalance);
         notification = findViewById(R.id.imgViewNotification);
         categoryViewAll = findViewById(R.id.categoryViewAll);
+        addNewTransaction = findViewById(R.id.addNewTransaction);
 
         final boolean[] isPasswordVisible = {false};
 
@@ -82,7 +86,13 @@ public class Home extends AppCompatActivity {
         categoryViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Home.this, CategoryHome.class ));
+                startActivity(new Intent(Home.this, CategoryHome.class));
+            }
+        });
+        addNewTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Home.this, AddNewTransaction.class));
             }
         });
     }

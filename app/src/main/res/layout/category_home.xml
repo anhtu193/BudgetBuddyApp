@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:background="@color/green"
         app:tabTextColor="@color/white"
-        app:tabIndicatorColor="@color/white">
+        app:tabIndicatorColor="@color/white"
+        >
         
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp.category;
+package com.example.budgetbuddyapp.categories;
 
 import java.io.Serializable;
 
@@ -8,10 +8,21 @@ public class Category implements Serializable {
     private String categoryName;
     private String categoryType;
     private int categoryImage;
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getCategoryID() {
         return categoryID;
     }
+
+    public Category() {};
 
     public void setCategoryID(String categoryID) {
         this.categoryID = categoryID;
@@ -55,5 +66,15 @@ public class Category implements Serializable {
         this.categoryName = categoryName;
         this.categoryType = categoryType;
         this.categoryImage = categoryImage;
+        this.isSelected = false;
+    }
+
+    public Category(String categoryID, String userID, String categoryName, String categoryType, int categoryImage, Boolean isSelected) {
+        this.categoryID = categoryID;
+        this.userID = userID;
+        this.categoryName = categoryName;
+        this.categoryType = categoryType;
+        this.categoryImage = categoryImage;
+        this.isSelected = isSelected;
     }
 }

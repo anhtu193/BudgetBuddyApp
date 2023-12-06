@@ -3,11 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".category.IncomeFragment">
+    tools:context=".categories.IncomeFragment">
+
+   <TextView
+       android:id="@+id/noItem"
+       android:layout_marginTop="150dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Có vẻ bạn chưa thêm loại chi tiêu nào cả, hãy thêm loại chi tiêu để có thể sử dụng nhé!"
+       android:textAlignment="center"
+       android:lineHeight="25dp"
+       android:paddingHorizontal="20dp"
+       android:textSize="16sp"
+       />
 
    <ListView
        android:id="@+id/listview"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"/>
+       android:layout_height="500dp"/>
 
 </FrameLayout>

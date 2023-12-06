@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp.category;
+package com.example.budgetbuddyapp.categories;
 
 import static android.content.ContentValues.TAG;
 
@@ -108,9 +108,11 @@ public class EditCategory extends AppCompatActivity {
             binding.categoryIcon.setImageResource(categoryImages[selectedCategory.getCategoryImage()]);
 
             if (selectedCategory.getCategoryType().equals("Thu nhập")) {
-                binding.spinnerIncomeOutcome.setSelection(0); // Select the second item in the Spinner (index 1) for "Thu nhập"
-            } else {
-                binding.spinnerIncomeOutcome.setSelection(1); // Select the first item in the Spinner (index 0) for "Chi tiêu"
+                binding.spinnerIncomeOutcome.setSelection(1);
+                // Select the second item in the Spinner (index 1) for "Thu nhập"
+            }
+            if (selectedCategory.getCategoryType().equals("Chi tiêu")) {
+                binding.spinnerIncomeOutcome.setSelection(0); // Select the first item in the Spinner (index 0) for "Chi tiêu"
             }
 
             binding.save.setOnClickListener(new View.OnClickListener() {

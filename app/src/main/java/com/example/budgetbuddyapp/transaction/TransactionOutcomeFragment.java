@@ -1,22 +1,23 @@
-package com.example.budgetbuddyapp.category;
+package com.example.budgetbuddyapp.transaction;
 
 import static android.content.ContentValues.TAG;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.budgetbuddyapp.R;
-import com.example.budgetbuddyapp.category.Category;
-import com.example.budgetbuddyapp.category.CategoryAdapter;
+import com.example.budgetbuddyapp.categories.Category;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,39 +27,30 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class OutcomeFragment extends Fragment {
+public class TransactionOutcomeFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
-
     ListView listView;
     ArrayList<Category> categoryList;
-    CategoryAdapter adapter;
+    TransactionCategoryAdapter adapter;
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_income, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.transaction_outcome_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         auth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = auth.getCurrentUser().getUid();
         categoryList = new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.listview);
-
-        //copy dãy này cho toàn bộ các chức năng chọn hình ảnh
+        TextView noItem = (TextView) view.findViewById(R.id.noItem);
         int[] categoryImages = {R.drawable.food, R.drawable.c_electricitybill, R.drawable.c_fuel, R.drawable.c_clothes,
                 R.drawable.c_bonus, R.drawable.c_shopping, R.drawable.c_book, R.drawable.c_salary, R.drawable.c_wallet,
                 R.drawable.c_phone, R.drawable.c_celebration, R.drawable.c_makeup, R.drawable.c_celebration2, R.drawable.c_basketball, R.drawable.c_gardening};
-
-//        String[] categoryImagesString = {"drawable/food.png","drawable/c_electricitybill.png", "drawable/c_fuel.png", "drawable/c_clothes.png",
-//                "drawable/c_bonus.png", "drawable/c_shopping.png", "drawable/c_book.png", "drawable/c_salary.png","drawable/c_wallet.png",
-//                "drawable/c_phone.png", "drawable/c_celebration.png", "drawable/c_makeup.png", "drawable/c_celebration2.png", "drawable/c_basketball.png", "drawable/c_gardening.png"};
 
         fStore.collection("categories")
                 .whereEqualTo("userID", userID)
@@ -76,19 +68,31 @@ public class OutcomeFragment extends Fragment {
                             String categoryID = document.getId();
                             String categoryName = document.getString("categoryName");
                             Number categoryImageIndex = document.getLong("categoryImage");
+                            Boolean isSelected = document.getBoolean("isSelected");
                             int categoryImage = categoryImageIndex.intValue();
-                            categoryList.add(new Category(categoryID, userID, categoryName, "Thu nhập", categoryImage));
+                            categoryList.add(new Category(categoryID, userID, categoryName, "Thu nhập", categoryImage, isSelected));
                         }
-
+                        if (categoryList.isEmpty()) {
+                            noItem.setVisibility(View.VISIBLE);
+                        } else
+                        {
+                            noItem.setVisibility(View.GONE);
+                        }
+                        Log.d(TAG, "Lấy dữ liệu thành công");
                         if (adapter == null) {
-                            adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList, getContext());
+                            adapter = new TransactionCategoryAdapter(getActivity(), R.layout.transaction_category_item, categoryList, getContext());
                             listView.setAdapter(adapter);
                         } else {
                             adapter.notifyDataSetChanged(); // Cập nhật ListView nếu adapter đã được khởi tạo trước đó
                         }
                     }
                 });
-
-
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            Category selectedCategory = categoryList.get(position);
+            // Cập nhật Adapter để áp dụng thay đổi lên giao diện người dùng
+            adapter.notifyDataSetChanged();
+            // Gửi dữ liệu biểu tượng của danh mục đã chọn về cho ChooseCategoryBottomSheet
+            ((ChooseCategoryBottomSheet) getParentFragment()).updateCategory(selectedCategory);
+        });
     }
 }

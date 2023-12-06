@@ -1,4 +1,4 @@
-package com.example.budgetbuddyapp.category;
+package com.example.budgetbuddyapp.categories;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
