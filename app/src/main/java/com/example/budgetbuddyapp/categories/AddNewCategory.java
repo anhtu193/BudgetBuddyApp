@@ -126,7 +126,7 @@ public class AddNewCategory extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "Document ID updated successfully.");
+                                            Log.d(TAG, "Category ID updated successfully.");
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {

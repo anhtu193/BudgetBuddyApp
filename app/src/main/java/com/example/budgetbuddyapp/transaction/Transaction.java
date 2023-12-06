@@ -9,6 +9,15 @@ public class Transaction {
     private String Note;
     private String Date;
     private String Time;
+    private Long Amount;
+
+    public Long getAmount() {
+        return Amount;
+    }
+
+    public void setAmount(Long amount) {
+        Amount = amount;
+    }
 
     public String getTransactionId() {
         return TransactionId;
@@ -58,12 +67,13 @@ public class Transaction {
         Time = time;
     }
 
-    public Transaction(String transactionId, String userId, String categoryId, String note, String date, String time) {
+    public Transaction(String transactionId, String userId, String categoryId, String note, String date, String time, Long amount) {
         TransactionId = transactionId;
         UserId = userId;
         CategoryId = categoryId;
         Note = note;
         Date = date;
         Time = time;
+        Amount = amount;
     }
 }

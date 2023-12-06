@@ -33,7 +33,7 @@
             android:textSize="20dp" />
 
         <ImageView
-            android:id="@+id/addNewTransaction"
+            android:id="@+id/saveTransaction"
             android:layout_width="29dp"
             android:layout_height="29dp"
             android:layout_alignParentEnd="true"

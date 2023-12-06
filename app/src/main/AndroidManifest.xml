@@ -12,6 +12,15 @@
         android:theme="@style/Theme.BudgetBuddyApp"
         tools:targetApi="31">
         <activity
+            android:name=".transaction.EditTransaction"
+            android:exported="false" />
+        <activity
+            android:name=".transaction.TransactionInfo"
+            android:exported="false" />
+        <activity
+            android:name=".transaction.RecentTransaction"
+            android:exported="false" />
+        <activity
             android:name=".transaction.AddNewTransaction"
             android:exported="false" />
         <activity
