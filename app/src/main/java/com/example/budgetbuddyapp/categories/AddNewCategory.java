@@ -51,6 +51,7 @@ public class AddNewCategory extends AppCompatActivity {
 //                "drawable/c_bonus.png", "drawable/c_shopping.png", "drawable/c_book.png", "drawable/c_salary.png","drawable/c_wallet.png",
 //                "drawable/c_phone.png", "drawable/c_celebration.png", "drawable/c_makeup.png", "drawable/c_celebration2.png", "drawable/c_basketball.png", "drawable/c_gardening.png"};
 
+        // Hiển thị các biểu tượng của người dùng
         CategoryGridViewAdapter gridAdapter = new CategoryGridViewAdapter(AddNewCategory.this, categoryImages);
         binding.gridview.setAdapter(gridAdapter);
 
@@ -150,6 +151,4 @@ public class AddNewCategory extends AppCompatActivity {
             }
         });
     }
-
-
 }

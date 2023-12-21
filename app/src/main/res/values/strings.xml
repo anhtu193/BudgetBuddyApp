@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BudgetBuddyApp</string>
+    <string name="app_name">Budget Buddy</string>
     <string name="welcome">Chào mừng bạn!</string>
     <string name="email">Email</string>
     <string name="password">Mật khẩu</string>

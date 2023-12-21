@@ -74,7 +74,8 @@ public class Home extends AppCompatActivity {
 
                     // Cập nhật giao diện người dùng với dữ liệu mới từ Firestore
                     fullName.setText(fullNameText != null ? fullNameText : "");
-                    balance.setText(balanceValue != null ? String.format("%,d", balanceValue) : "");
+                    balance.setText(balanceValue != null ? String.format("%,d", balanceValue) + " đ" : "");
+                    Log.d(TAG, "User's balance updated: " +  String.format("%,d", balanceValue));
                     categoryNumber.setText(categoriesValue != null ? categoriesValue.toString() : "");
                     budgetNumber.setText(budgetsValue != null ? budgetsValue.toString() : "");
                     goalNumber.setText(goalsValue != null ? goalsValue.toString() : "");
@@ -115,6 +116,39 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Home.this, RecentTransaction.class));
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DocumentReference documentReference = fStore.collection("users").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.e(TAG, "Listen failed: " + error);
+                    return;
+                }
+
+                if (value != null && value.exists()) {
+                    String fullNameText = value.getString("fullname");
+                    Long balanceValue = value.getLong("balance");
+                    Long categoriesValue = value.getLong("categories");
+                    Long budgetsValue = value.getLong("budgets");
+                    Long goalsValue = value.getLong("goals");
+
+                    // Cập nhật giao diện người dùng với dữ liệu mới từ Firestore
+                    fullName.setText(fullNameText != null ? fullNameText : "");
+                    balance.setText(balanceValue != null ? String.format("%,d", balanceValue) + " đ": "");
+                    Log.d(TAG, "User's balance updated: " +  String.format("%,d", balanceValue));
+                    categoryNumber.setText(categoriesValue != null ? categoriesValue.toString() : "");
+                    budgetNumber.setText(budgetsValue != null ? budgetsValue.toString() : "");
+                    goalNumber.setText(goalsValue != null ? goalsValue.toString() : "");
+                } else {
+                    Log.d(TAG, "No such document");
+                }
             }
         });
     }

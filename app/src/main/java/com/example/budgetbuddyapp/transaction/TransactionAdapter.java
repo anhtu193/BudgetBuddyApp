@@ -63,37 +63,47 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
         TextView transactionAmount = (TextView) view.findViewById(R.id.transactionAmount);
 
         Transaction transaction = getItem(position);
-        fStore.collection("categories").document(transaction.getCategoryId()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.e(TAG, "Listen failed: " + error);
-                    return;
-                }
-                if (value != null && value.exists()) {
-                    Number categoryImageIndex = value.getLong("categoryImage");
-                    int categoryImage = categoryImageIndex.intValue();
-                    String FirestoreCategoryName = value.getString("categoryName");
-                    String categoryType = value.getString("categoryType");
-
-                    categoryName.setText(FirestoreCategoryName);
-                    categoryIcon.setImageResource(categoryImages[categoryImage]);
-
-                    if (categoryType.equals("Thu nhập")) {
-                        int color = ContextCompat.getColor(getContext(), R.color.earn);
-                        transactionAmount.setTextColor(color);
-                        String amount = "+" + String.format("%,d", transaction.getAmount());
-                        transactionAmount.setText(amount);
+        String categoryId = transaction.getCategoryId();
+        if (categoryId != null)
+        {
+            Log.e(TAG, "Category ID selected is :" + categoryId);
+            fStore.collection("categories").document(transaction.getCategoryId()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.e(TAG, "Listen failed: " + error);
+                        return;
                     }
-                    else {
-                        int color = ContextCompat.getColor(getContext(), R.color.spend);
-                        transactionAmount.setTextColor(color);
-                        String amount = "-" + String.format("%,d", transaction.getAmount());
-                        transactionAmount.setText(amount);
+                    if (value != null && value.exists()) {
+                        Number categoryImageIndex = value.getLong("categoryImage");
+                        int categoryImage = categoryImageIndex.intValue();
+                        String FirestoreCategoryName = value.getString("categoryName");
+                        String categoryType = value.getString("categoryType");
+
+                        categoryName.setText(FirestoreCategoryName);
+                        categoryIcon.setImageResource(categoryImages[categoryImage]);
+
+                        if (categoryType.equals("Thu nhập")) {
+                            int color = ContextCompat.getColor(getContext(), R.color.earn);
+                            transactionAmount.setTextColor(color);
+                            String amount = "+" + String.format("%,d", transaction.getAmount());
+                            transactionAmount.setText(amount);
+                        }
+                        else {
+                            int color = ContextCompat.getColor(getContext(), R.color.spend);
+                            transactionAmount.setTextColor(color);
+                            String amount = "-" + String.format("%,d", transaction.getAmount());
+                            transactionAmount.setText(amount);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        else
+        {
+            Log.e(TAG, "Category ID is null");
+        }
+
         transactionDate.setText(transaction.getDate());
         transactionNote.setText(transaction.getNote());
         return view;

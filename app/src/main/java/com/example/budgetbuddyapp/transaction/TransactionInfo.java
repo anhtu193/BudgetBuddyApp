@@ -40,6 +40,13 @@ public class TransactionInfo extends AppCompatActivity {
     FirebaseFirestore fStore;
     FirebaseAuth auth;
     String categoryType;
+    String categoryID;
+
+    String transactionID;
+    String noteI;
+    long amountI;
+    String dateI;
+    String timeI;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,50 +71,72 @@ public class TransactionInfo extends AppCompatActivity {
         });
         Intent intent = getIntent();
         if (intent != null) {
-            String transactionID = intent.getStringExtra("TransactionID");
-            String categoryID = intent.getStringExtra("CategoryID");
-            String noteI = intent.getStringExtra("Note");
-            long amountI = intent.getLongExtra("Amount", 0); // Giá trị mặc định 0 nếu không có dữ liệu
-            String dateI = intent.getStringExtra("Date");
-            String timeI = intent.getStringExtra("Time");
-
-            fStore.collection("categories").document(categoryID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                    if (error != null) {
-                        Log.e(TAG, "Listen failed: " + error);
-                        return;
-                    }
-                    if (value != null && value.exists()) {
-                        Number categoryImageIndex = value.getLong("categoryImage");
-                        int categoryImage = categoryImageIndex.intValue();
-                        String FirestoreCategoryName = value.getString("categoryName");
-                        categoryType = value.getString("categoryType");
-                        if (categoryType.equals("Thu nhập")) {
-                            int color = ContextCompat.getColor(TransactionInfo.this, R.color.earn);
-                            amount.setTextColor(color);
-                            amount.setText(String.format("%,d", amountI));
+            transactionID = intent.getStringExtra("TransactionID");
+            categoryID = intent.getStringExtra("CategoryID");
+            if (transactionID != null) {
+                Log.e(TAG, "Transaction Id is " + transactionID);
+                fStore.collection("transactions").document(transactionID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e(TAG, "Listen failed: " + error);
+                            return;
                         }
-                        else {
-                            int color = ContextCompat.getColor(TransactionInfo.this, R.color.spend);
-                            amount.setTextColor(color);
-                            amount.setText(String.format("%,d", amountI));
+                        if (value != null && value.exists()) {
+                            noteI = value.getString("note");
+                            amountI = value.getLong("amount");
+                            dateI = value.getString("date");
+                            timeI = value.getString("time");
+
+                            date.setText(dateI);
+                            time.setText(timeI);
+                            if (noteI.equals("")) {
+                                note.setText("Không có");
+                            } else {
+                                note.setText(noteI);
+                            }
                         }
-                        categoryName.setText(FirestoreCategoryName);
-                        categoryIcon.setImageResource(categoryImages[categoryImage]);
                     }
-                }
-            });
-
-
-            date.setText(dateI);
-            time.setText(timeI);
-            if (noteI.equals(""))
-            {
-                note.setText("Không có");
-            } else {
-                note.setText(noteI);
+                });
             }
+            else
+            {
+                Log.e(TAG, "Transaction Id is null ");
+            }
+
+            if (categoryID != null)
+            {
+                fStore.collection("categories").document(categoryID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e(TAG, "Listen failed: " + error);
+                            return;
+                        }
+                        if (value != null && value.exists()) {
+                            Number categoryImageIndex = value.getLong("categoryImage");
+                            int categoryImage = categoryImageIndex.intValue();
+                            String FirestoreCategoryName = value.getString("categoryName");
+                            categoryType = value.getString("categoryType");
+                            if (categoryType.equals("Thu nhập")) {
+                                int color = ContextCompat.getColor(TransactionInfo.this, R.color.earn);
+                                amount.setTextColor(color);
+                                amount.setText(String.format("%,d", amountI));
+                            }
+                            else {
+                                int color = ContextCompat.getColor(TransactionInfo.this, R.color.spend);
+                                amount.setTextColor(color);
+                                amount.setText(String.format("%,d", amountI));
+                            }
+                            categoryName.setText(FirestoreCategoryName);
+                            categoryIcon.setImageResource(categoryImages[categoryImage]);
+                        }
+                    }
+                });
+            }
+
+
+
 
             deleteTransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,6 +163,45 @@ public class TransactionInfo extends AppCompatActivity {
                 }
             });
         }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+            if (transactionID != null) {
+                Log.e(TAG, "Transaction Id is " + transactionID);
+                fStore.collection("transactions").document(transactionID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e(TAG, "Listen failed: " + error);
+                            return;
+                        }
+                        if (value != null && value.exists()) {
+                            String noteI = value.getString("note");
+                            Long amountI = value.getLong("amount");
+                            String dateI = value.getString("date");
+                            String timeI = value.getString("time");
+
+                            date.setText(dateI);
+                            time.setText(timeI);
+                            amount.setText(String.format("%,d", amountI));
+                            if (noteI.equals("")) {
+                                note.setText("Không có");
+                            } else {
+                                note.setText(noteI);
+                            }
+                        }
+                    }
+                });
+            }
+            else
+            {
+                Log.e(TAG, "Transaction Id is null ");
+            }
+
 
 
     }
@@ -168,42 +236,51 @@ public class TransactionInfo extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        fStore.collection("categories").document(categoryId).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            String categoryType = documentSnapshot.getString("categoryType");
+        if (categoryId != null)
+        {
+            Log.d(TAG, "Category Id is :" + categoryId);
+            fStore.collection("categories").document(categoryId).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                String categoryType = documentSnapshot.getString("categoryType");
 
-                            // Xóa giao dịch
-                            fStore.collection("transactions").document(transactionId).delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(getApplicationContext(), "Xóa giao dịch thành công!", Toast.LENGTH_SHORT).show();
-                                            Log.d(TAG, "onSuccess: category deleted with ID: " + transactionId);
+                                // Xóa giao dịch
+                                fStore.collection("transactions").document(transactionId).delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(getApplicationContext(), "Xóa giao dịch thành công!", Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "onSuccess: category deleted with ID: " + transactionId);
 
-                                            // Thực hiện cập nhật số dư của người dùng
-                                            updateBalance(categoryType, amount);
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getApplicationContext(), "Xóa giao dịch thất bại!", Toast.LENGTH_SHORT).show();
-                                            Log.d(TAG, "onFailure: " + e.toString());
-                                        }
-                                    });
+                                                // Thực hiện cập nhật số dư của người dùng
+                                                updateBalance(categoryType, amount);
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getApplicationContext(), "Xóa giao dịch thất bại!", Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "onFailure: " + e.toString());
+                                            }
+                                        });
+                            }
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.toString());
-                    }
-                });
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "onFailure: " + e.toString());
+                        }
+                    });
+        }
+        else
+        {
+            Log.d(TAG, "Category Id is null");
+        }
+
     }
     private void updateBalance(String categoryType, long amount) {
         fStore.collection("users").document(auth.getCurrentUser().getUid()).get()

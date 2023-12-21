@@ -77,6 +77,7 @@ public class OutcomeFragment extends Fragment {
                             Number categoryImageIndex = document.getLong("categoryImage");
                             int categoryImage = categoryImageIndex.intValue();
                             categoryList.add(new Category(categoryID, userID, categoryName, "Thu nhập", categoryImage));
+                            Log.w(TAG, "fetched category with id " + categoryID);
                         }
                         if (categoryList.isEmpty()) {
                             noItem.setVisibility(View.VISIBLE);
@@ -88,6 +89,7 @@ public class OutcomeFragment extends Fragment {
                             adapter = new CategoryAdapter(getActivity(), R.layout.category_item, categoryList, getContext());
                             listView.setAdapter(adapter);
                         } else {
+                            Log.w(TAG, "category list Length" + categoryList.size());
                             adapter.notifyDataSetChanged(); // Cập nhật ListView nếu adapter đã được khởi tạo trước đó
                         }
                     }

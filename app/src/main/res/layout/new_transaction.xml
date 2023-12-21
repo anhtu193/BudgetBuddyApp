@@ -47,7 +47,7 @@
             android:layout_height="49dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="66dp"
-            android:src="@drawable/food" />
+            android:src="@drawable/no_category_selected" />
 
         <EditText
             android:id="@+id/transactionAmount"

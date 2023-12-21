@@ -158,10 +158,13 @@ public class AddNewTransaction extends AppCompatActivity {
         note = findViewById(R.id.note);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
+
         auth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = auth.getCurrentUser().getUid();
+
         calendar = Calendar.getInstance();
+
         addNewTransaction = findViewById(R.id.addNewTransaction);
 
         updateDateInView();
@@ -244,51 +247,60 @@ public class AddNewTransaction extends AppCompatActivity {
         addNewTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 if (transactionAmount.getText().toString().equals("")) {
                     Toast.makeText(AddNewTransaction.this, "Vui lòng nhập số tiền giao dịch!", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("userID", userID);
-                    data.put("date", date.getText().toString());
-                    data.put("time", time.getText().toString());
-                    data.put("categoryId", selectedCategory.getCategoryID());
-                    Long amount = formatStringToNumber(transactionAmount.getText().toString());
-                    data.put("amount", amount);
-                    data.put("note", note.getText().toString());
+                    if (selectedCategory == null)
+                    {
+                        Toast.makeText(AddNewTransaction.this, "Hãy tạo mới loại chi tiêu để có thể thêm giao dịch nhé!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("userID", userID);
+                        data.put("date", date.getText().toString());
+                        data.put("time", time.getText().toString());
+                        data.put("categoryId", selectedCategory.getCategoryID());
+                        Long amount = formatStringToNumber(transactionAmount.getText().toString());
+                        data.put("amount", amount);
+                        data.put("note", note.getText().toString());
 
-                    fStore.collection("transactions").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            // Lấy ID của document được tạo
-                            String documentId = documentReference.getId();
+                        fStore.collection("transactions").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                // Lấy ID của document được tạo
+                                String documentId = documentReference.getId();
 
-                            fStore.collection("transactions").document(documentId).update("transactionId", documentId)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "Transaction ID updated successfully.");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d(TAG, "Failed to update document ID: " + e.toString());
-                                        }
-                                    });
-                            // update User's balance
-                            updateUserBalance(amount, selectedCategory.getCategoryType());
+                                fStore.collection("transactions").document(documentId).update("transactionId", documentId)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "Transaction ID updated successfully.");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "Failed to update document ID: " + e.toString());
+                                            }
+                                        });
+                                // update User's balance
+                                updateUserBalance(amount, selectedCategory.getCategoryType());
 
-                            Log.d(TAG, "onSuccess: New transaction created with ID: " + documentReference.getId());
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "onFailure: +" + e.toString());
-                        }
-                    });
+                                Log.d(TAG, "onSuccess: New transaction created with ID: " + documentReference.getId());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "onFailure: +" + e.toString());
+                            }
+                        });
 
-                    finish();
+                        finish();
+                    }
                 }
             }
         });
