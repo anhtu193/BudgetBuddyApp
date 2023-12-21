@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BudgetBuddyApp"
         tools:targetApi="31">
         <activity
+            android:name=".Navigation"
+            android:exported="false" />
+        <activity
             android:name=".transaction.EditTransaction"
             android:exported="false" />
         <activity
@@ -44,9 +47,6 @@
         <activity
             android:name=".Register"
             android:exported="false" />
-        <activity
-            android:name=".Home"
-            android:exported="true" />
     </application>
 
 </manifest>

@@ -10,14 +10,11 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.budgetbuddyapp.Home;
 import com.example.budgetbuddyapp.R;
 import com.example.budgetbuddyapp.categories.Category;
 import com.example.budgetbuddyapp.categories.CategoryHome;
-import com.example.budgetbuddyapp.categories.CategoryViewPagerApdater;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

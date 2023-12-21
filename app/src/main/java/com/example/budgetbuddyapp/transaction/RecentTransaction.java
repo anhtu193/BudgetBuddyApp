@@ -13,10 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.budgetbuddyapp.Home;
 import com.example.budgetbuddyapp.R;
-import com.example.budgetbuddyapp.categories.Category;
-import com.example.budgetbuddyapp.categories.CategoryAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
