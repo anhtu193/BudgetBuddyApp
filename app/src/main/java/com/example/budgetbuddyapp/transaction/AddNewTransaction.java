@@ -63,11 +63,12 @@ public class AddNewTransaction extends AppCompatActivity {
                         if (documentSnapshot.exists()) {
                             String categoryID = documentSnapshot.getId();
                             String categoryName = documentSnapshot.getString("categoryName");
+                            String categoryType = documentSnapshot.getString("categoryType");
                             Number categoryImageIndex = documentSnapshot.getLong("categoryImage");
                             Boolean isSelected = documentSnapshot.getBoolean("isSelected");
                             int categoryImage = categoryImageIndex.intValue();
 
-                            selectedCategory = new Category(categoryID, userID, categoryName, "Chi tiêu", categoryImage, true);
+                            selectedCategory = new Category(categoryID, userID, categoryName, categoryType, categoryImage, isSelected);
                             // Perform any necessary updates here based on selectedCategory
                             // For example, update UI elements with selectedCategory data
                             categoryIcon.setImageResource(categoryImages[selectedCategory.getCategoryImage()]);
