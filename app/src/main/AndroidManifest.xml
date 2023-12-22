@@ -45,8 +45,18 @@
         <activity
             android:name=".expense.ExpenseEditScreen"
             android:exported="false" />
+
         <activity
-            android:name=".Login"
+            android:name=".Profile.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".Login.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".Login.ForgotPasswordSuccessfully"
+            android:exported="false" />
+        <activity
+            android:name=".Login.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +65,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".Profile.Editprofile"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Login"
+            android:exported="true" />
+        <activity
+            android:name=".Login.Register"
             android:exported="false" />
     </application>
 

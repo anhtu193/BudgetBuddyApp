@@ -38,6 +38,8 @@ public class HomeFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
+
+    public static final String SHARED_PREFS = "sharePrefs"; // đăng xuất
     public HomeFragment() {
         // Required empty public constructor
     }

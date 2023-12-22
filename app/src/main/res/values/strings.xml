@@ -20,4 +20,5 @@
     <string name="editprofile">"Chỉnh sửa thông tin "</string>
     <string name="changepassword">Đổi mật khẩu</string>
     <string name="logout">Đăng xuất</string>
+    <string name="countinue">Tiếp tục</string>
 </resources>
