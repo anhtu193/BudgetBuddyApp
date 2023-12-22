@@ -4,10 +4,11 @@ public class Expense {
     protected String expenseID;
     protected String userID;
     protected String expenseName;
+    protected String categoryID;
     protected int expenseImage;
     protected String expenseTime;
     protected int expenseLimit;
-    protected int expenseBudget;
+    protected int expenseCurrent;
 
     public String getExpenseID() {
         return expenseID;
@@ -15,6 +16,14 @@ public class Expense {
 
     public void setExpenseID(String expenseID) {
         this.expenseID = expenseID;
+    }
+
+    public String getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
     }
 
     public String getUserID() {
@@ -57,18 +66,19 @@ public class Expense {
         this.expenseLimit = expenseLimit;
     }
 
-    public int getExpenseBudget() {
-        return expenseBudget;
+    public int getExpenseCurrent() {
+        return expenseCurrent;
     }
 
-    public void setExpenseBudget(int expenseBudget) {
-        this.expenseBudget = expenseBudget;
+    public void setExpenseCurrent(int expenseCurrent) {
+        this.expenseCurrent = expenseCurrent;
     }
 
-    public Expense(String expenseID, String userID, String expenseName, int expenseImage) {
+    public Expense(String expenseID, String userID, String expenseName, int expenseImage, String categoryID) {
         this.expenseID = expenseID;
         this.userID = userID;
         this.expenseName = expenseName;
         this.expenseImage = expenseImage;
+        this.categoryID = categoryID;
     }
 }

@@ -1,16 +1,22 @@
 package com.example.budgetbuddyapp;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,10 +24,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class BudgetHome extends AppCompatActivity {
 
@@ -75,9 +85,16 @@ public class BudgetHome extends AppCompatActivity {
 
                         expenseList.clear(); // Clear old data before updating
 
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM - yyyy", Locale.getDefault());
+                        String currentMonthYear = dateFormat.format(calendar.getTime());
+
                         // Check if there are expenses
                         if (!value.isEmpty()) {
                             for (QueryDocumentSnapshot document : value) {
+                                if (!document.getString("expenseTime").equals(currentMonthYear)) {
+                                    deleteExpenseWhenEndMonth();
+                                }
                                 processExpenseDocument(document);
                             }
                         }
@@ -118,16 +135,17 @@ public class BudgetHome extends AppCompatActivity {
 
     private void processCategoryDocument(QueryDocumentSnapshot document) {
         String categoryID = document.getId();
+
         String categoryName = document.getString("categoryName");
         Number categoryImageIndex = document.getLong("categoryImage");
         int categoryImage = categoryImageIndex.intValue();
 
         // Check if there is a corresponding expense for this category
-        boolean hasCorrespondingExpense = hasCorrespondingExpense(categoryName);
+        boolean hasCorrespondingExpense = hasCorrespondingExpense(categoryID);
 
         // Exclude categories with corresponding expenses
         if (!hasCorrespondingExpense) {
-            expenseList.add(new Expense(categoryID, userID, categoryName, categoryImage));
+            expenseList.add(new Expense(categoryID, userID, categoryName, categoryImage, categoryID));
         }
     }
 
@@ -146,28 +164,76 @@ public class BudgetHome extends AppCompatActivity {
 //        expenseList.addAll(filteredList);
 //    }
 
-    private boolean hasCorrespondingExpense(String categoryName) {
+    private boolean hasCorrespondingExpense(String categoryID) {
         for (Expense expense : expenseList) {
-            if (expense.getExpenseName().equals(categoryName)) {
+            if (expense.getCategoryID().equals(categoryID)) {
                 return true;
             }
         }
         return false;
     }
 
-    private void processExpenseDocument(QueryDocumentSnapshot document) {
-        String expenseID = document.getId();
-        String expenseName = document.getString("expenseName");
-        Number expenseImageIndex = document.getLong("expenseImage");
-        String expenseTime = document.getString("expenseTime");
+    private void processExpenseDocument(QueryDocumentSnapshot expenseDocument) {
+        String expenseID = expenseDocument.getId();
+        String expenseTime = expenseDocument.getString("expenseTime");
 
         // Ensure to use the correct method based on the actual data type in Firestore
-        Object limitValue = document.get("expenseLimit");
-
+        Object limitValue = expenseDocument.get("expenseLimit");
         int expenseLimit = (limitValue instanceof Number) ? ((Number) limitValue).intValue() : 0;
-        int expenseImage = expenseImageIndex.intValue();
 
-        // Handle the expense data as needed
-        expenseList.add(new ExpenseProgress(expenseID, userID, expenseName, expenseImage, expenseTime, expenseLimit));
+        String categoryID = expenseDocument.getString("categoryID");
+
+        fStore.collection("categories")
+                .whereEqualTo("userID", userID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful()) {
+
+                            for (QueryDocumentSnapshot categoryDocument : task.getResult()) {
+                                if (categoryID.equals(categoryDocument.getId())) {
+                                    String expenseName = categoryDocument.getString("categoryName");
+                                    Number categoryImageIndex = categoryDocument.getLong("categoryImage");
+                                    int expenseImage = categoryImageIndex.intValue();
+                                    expenseList.add(new ExpenseProgress(expenseID, userID, expenseName, expenseImage, categoryID, expenseTime, expenseLimit));
+                                }
+                            }
+                        } else {
+                            Log.e(TAG, "Error getting categories: ", task.getException());
+                        }
+                    }
+                });
     }
+
+    private void deleteExpenseWhenEndMonth() {
+
+        // Lấy ngày hiện tại
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM - yyyy", Locale.getDefault());
+        String currentMonthYear = dateFormat.format(calendar.getTime());
+
+        // Thực hiện truy vấn để lấy các expense cần xóa
+        fStore.collection("expenses")
+                .whereEqualTo("expenseTime", currentMonthYear)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        // Duyệt qua danh sách expense và xóa chúng
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            document.getReference().delete();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Error deleting expenses: " + e.getMessage());
+                    }
+                });
+    }
+
+    // Phần khung của phần khi thêm mới giao dịch thì sẽ xuất hiện giới hạn chi tiêu
 }

@@ -84,5 +84,19 @@ public class Home extends AppCompatActivity {
                 startActivity(new Intent(Home.this, CategoryHome.class ));
             }
         });
+
+        addNewTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Home.this, BudgetHome.class ));
+            }
+        });
+
+        fullName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Home.this, ReportHome.class ));
+            }
+        });
     }
 }

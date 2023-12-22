@@ -27,6 +27,9 @@
             android:name=".BudgetHome"
             android:exported="false" />
         <activity
+            android:name=".ReportHome"
+            android:exported="false" />
+        <activity
             android:name=".ExpenseEditScreen"
             android:exported="false" />
         <activity

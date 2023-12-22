@@ -69,13 +69,12 @@ public class ExpenseEdit extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
-                if (item.equals("Chỉ tháng này"))
-                {
+                if (item.equals("Chỉ tháng này")) {
                     isOnly[0] = true;
-                } else if (item.equals("Tất cả các tháng"))
-                {
-                    isOnly[0] = false;
                 }
+//                else if (item.equals("Tất cả các tháng")) {
+//                    isOnly[0] = false;
+//                }
             }
 
             @Override
@@ -86,7 +85,7 @@ public class ExpenseEdit extends AppCompatActivity {
 
         ArrayList<String> spinner_choice = new ArrayList<>();
         spinner_choice.add("Chỉ tháng này");
-        spinner_choice.add("Tất cả các tháng");
+//        spinner_choice.add("Tất cả các tháng");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinner_choice);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         binding.spinnerAddExpense.setAdapter(adapter);
@@ -159,15 +158,14 @@ public class ExpenseEdit extends AppCompatActivity {
         Map<String, Object> updatedData = new HashMap<>();
         updatedData.put("expenseLimit", updatedLimit);
 
-        if (isOnly[0] == true)
-        {
+        if (isOnly[0] == true) {
             int month = Calendar.getInstance().get(Calendar.MONTH) + 1; // 1 - 12
             int year = Calendar.getInstance().get(Calendar.YEAR); // 2023
             updatedData.put("expenseTime", month + " - " + year);
-        } else
-        {
-            updatedData.put("expenseTime", "Tất cả các tháng");
         }
+//        else {
+//            updatedData.put("expenseTime", "Tất cả các tháng");
+//        }
 
         fStore.collection("expenses").document(expenseID).update(updatedData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -2,6 +2,7 @@ package com.example.budgetbuddyapp;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +27,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class AddNewExpense extends AppCompatActivity {
 
@@ -74,17 +79,23 @@ public class AddNewExpense extends AppCompatActivity {
             });
         }
 
+        ArrayList<String> spinner_choice = new ArrayList<>();
+        spinner_choice.add("Chỉ tháng này");
+//        spinner_choice.add("Tất cả các tháng");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinner_choice);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        binding.spinnerAddExpense.setAdapter(adapter);
+
         binding.spinnerAddExpense.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
-                if (item.equals("Chỉ tháng này"))
-                {
+                if (item.equals("Chỉ tháng này")) {
                     isOnly[0] = true;
-                } else if (item.equals("Tất cả các tháng"))
-                {
-                    isOnly[0] = false;
                 }
+//                else if (item.equals("Tất cả các tháng")) {
+//                    isOnly[0] = false;
+//                }
             }
 
             @Override
@@ -92,13 +103,6 @@ public class AddNewExpense extends AppCompatActivity {
 
             }
         });
-
-        ArrayList<String> spinner_choice = new ArrayList<>();
-        spinner_choice.add("Chỉ tháng này");
-        spinner_choice.add("Tất cả các tháng");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinner_choice);
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        binding.spinnerAddExpense.setAdapter(adapter);
 
         binding.closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +121,7 @@ public class AddNewExpense extends AppCompatActivity {
                     Map<String, Object> data = new HashMap<>();
                     data.put("userID", userID);
                     data.put("expenseName" , binding.expenseName.getText());
+                    data.put("categoryID", getIntent().getStringExtra("categoryID"));
 
                     String expenseLimitText = binding.inputExpenseLimit.getText().toString();
                     int expenseLimitValue = Integer.parseInt(expenseLimitText);
@@ -126,15 +131,14 @@ public class AddNewExpense extends AppCompatActivity {
                     int expenseImage = intent.getIntExtra("expenseImage", 0);
                     data.put("expenseImage" , expenseImage);
 
-                    if (isOnly[0] == true)
-                    {
+                    if (isOnly[0] == true) {
                         int month = Calendar.getInstance().get(Calendar.MONTH) + 1; // 1 - 12
                         int year = Calendar.getInstance().get(Calendar.YEAR); // 2023
                         data.put("expenseTime", month + " - " + year);
-                    } else
-                    {
-                        data.put("expenseTime", "Tất cả các tháng");
                     }
+//                    else {
+//                        data.put("expenseTime", "Tất cả các tháng");
+//                    }
                     fStore.collection("expenses").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {

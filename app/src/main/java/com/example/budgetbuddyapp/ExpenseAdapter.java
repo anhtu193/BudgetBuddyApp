@@ -73,11 +73,12 @@ public class ExpenseAdapter extends ArrayAdapter<Expense> {
                         intent.putExtra("expenseLimit", expense.getExpenseLimit());
                         intent.putExtra("expenseTime", expense.getExpenseTime());
                         intent.putExtra("expenseImage", expense.getExpenseImage());
+                        intent.putExtra("categoryID", expense.getCategoryID());
                         activity.startActivity(intent);
                     }
                 });
             } else {
-                // Get the current expense
+                // Get the current expense progress
                 ExpenseProgress expense = (ExpenseProgress) getItem(position);
 
                 convertView = inflater.inflate(R.layout.item_expense_progress, parent, false);
@@ -103,6 +104,7 @@ public class ExpenseAdapter extends ArrayAdapter<Expense> {
                         intent.putExtra("expenseLimit", expense.getExpenseLimit());
                         intent.putExtra("expenseTime", expense.getExpenseTime());
                         intent.putExtra("expenseImage", expense.getExpenseImage());
+                        intent.putExtra("categoryID", expense.getCategoryID());
                         activity.startActivity(intent);
                     }
                 });
