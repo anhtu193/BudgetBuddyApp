@@ -38,6 +38,27 @@ public class Navigation extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new HomeFragment()).commit();
         }
+        if (getIntent().hasExtra("selectedTab")) {
+            int tabPosition = getIntent().getIntExtra("selectedTab", 0);
+
+            switch (tabPosition) {
+                case 0:
+                    bottomNavigationView.setSelectedItemId(R.id.home);
+                    break;
+                case 1:
+                    bottomNavigationView.setSelectedItemId(R.id.report);
+                    break;
+                case 2:
+                    bottomNavigationView.setSelectedItemId(R.id.budget);
+                    break;
+                case 3:
+                    bottomNavigationView.setSelectedItemId(R.id.profile);
+                    break;
+                default:
+                    // Xử lý mặc định nếu có số thứ tự không hợp lệ
+                    break;
+            }
+        }
     }
 
     private BottomNavigationView.OnItemSelectedListener navListener =

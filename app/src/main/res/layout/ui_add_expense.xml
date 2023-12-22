@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,6 +26,7 @@
                 android:paddingRight="16dp">
 
                 <ImageView
+                    android:id="@+id/closeButton"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:src="@drawable/reject__1_"/>
@@ -44,6 +43,7 @@
                     android:textColor="@color/white"/>
 
                 <ImageView
+                    android:id="@+id/addNew"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:src="@drawable/check__1_"/>
@@ -72,14 +72,10 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ellipse" />
-
-                            <ImageView
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
-                                android:src="@drawable/restaurant"
+                                android:id="@+id/expenseImage"
+                                android:layout_width="49dp"
+                                android:layout_height="49dp"
+                                android:src="@drawable/food"
                                 android:layout_gravity="center"/>
 
                         </FrameLayout>
@@ -91,6 +87,7 @@
                             android:layout_marginLeft="18dp">
 
                             <TextView
+                                android:id="@+id/expenseName"
                                 android:textSize="20sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -103,24 +100,27 @@
                                 android:layout_width="wrap_content"
                                 android:fontFamily="@font/montserrat_regular"
                                 android:layout_height="wrap_content"
-                                android:text="Đặt giới hạn chi tiêu cho danh mục này"
+                                android:text="Đặt giới hạn chi tiêu cho tháng này"
                                 />
 
+
                             <EditText
+                                android:id="@+id/inputExpenseLimit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColorHint="@color/input_text"
-                                android:textColor="@color/black"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/montserrat_semibold"
+                                android:layout_marginTop="9dp"
                                 android:background="@drawable/custom_input"
+                                android:fontFamily="@font/montserrat_semibold"
                                 android:hint="Giới hạn chi tiêu"
                                 android:padding="16dp"
-                                android:layout_marginTop="9dp"
-                                android:textSize="13sp"/>
-
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/input_text"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
 
                             <Spinner
+                                android:visibility="gone"
+                                android:id="@+id/spinnerAddExpense"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:spinnerMode="dropdown"
@@ -148,6 +148,7 @@
                             android:textColor="@color/black"/>
 
                         <TextView
+                            android:id="@+id/balance"
                             android:textSize="20sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

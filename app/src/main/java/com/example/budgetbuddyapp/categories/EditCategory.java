@@ -11,23 +11,34 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.budgetbuddyapp.Navigation;
 import com.example.budgetbuddyapp.R;
 import com.example.budgetbuddyapp.databinding.ActivityEditCategoryBinding;
+import com.example.budgetbuddyapp.expense.ExpenseEdit;
+import com.example.budgetbuddyapp.expense.ExpenseProgress;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditCategory extends AppCompatActivity {
     private Category selectedCategory;
     ActivityEditCategoryBinding binding;
     FirebaseAuth auth;
     FirebaseFirestore fStore;
-    int[] iconURL;
+    int iconURL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,19 +46,33 @@ public class EditCategory extends AppCompatActivity {
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        iconURL = 0;
         // Lấy dữ liệu Category từ Intent
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("category")) {
-            selectedCategory = (Category) intent.getSerializableExtra("category");
-        }
-
-        iconURL = new int[]{0};
-        final Boolean[] isOutcome = {true};
-
         //Copy array này đến toàn bộ những nơi cần fetch dữ liệu từ Firestore về
         int[] categoryImages = {R.drawable.food, R.drawable.c_electricitybill, R.drawable.c_fuel, R.drawable.c_clothes,
                 R.drawable.c_bonus, R.drawable.c_shopping, R.drawable.c_book, R.drawable.c_salary, R.drawable.c_wallet,
                 R.drawable.c_phone, R.drawable.c_celebration, R.drawable.c_makeup, R.drawable.c_celebration2, R.drawable.c_basketball, R.drawable.c_gardening};
+
+
+        if (intent != null && intent.hasExtra("category")) {
+            selectedCategory = (Category) intent.getSerializableExtra("category");
+            if (selectedCategory != null) {
+
+                binding.inputCategoryName.setText(selectedCategory.getCategoryName());
+                iconURL = selectedCategory.getCategoryImage();
+                binding.categoryIcon.setImageResource(categoryImages[iconURL]);
+
+                binding.save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Lưu thông tin chỉnh sửa của Category vào Firestore
+                        updateCategory(selectedCategory); // Tạo phương thức này để cập nhật thông tin Category lên Firestore
+                    }
+                });
+            }
+        }
+
 
 //        String[] categoryImagesString = {"drawable/food.png","drawable/c_electricitybill.png", "drawable/c_fuel.png", "drawable/c_clothes.png",
 //                "drawable/c_bonus.png", "drawable/c_shopping.png", "drawable/c_book.png", "drawable/c_salary.png","drawable/c_wallet.png",
@@ -60,38 +85,12 @@ public class EditCategory extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 binding.categoryIcon.setImageResource(categoryImages[position]);
-                iconURL[0] = position;
+                iconURL = position;
                 selectedCategory.setCategoryImage(position);
             }
         });
 
-        binding.spinnerIncomeOutcome.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String item = adapterView.getItemAtPosition(i).toString();
-                if (item.equals("Chi tiêu"))
-                {
-                    isOutcome[0] = true;
-                    selectedCategory.setCategoryType("Chi tiêu");
-                } else if (item.equals("Thu nhập"))
-                {
-                    isOutcome[0] = false;
-                    selectedCategory.setCategoryType("Thu nhập");
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        ArrayList<String> spinner_choice = new ArrayList<>();
-        spinner_choice.add("Chi tiêu");
-        spinner_choice.add("Thu nhập");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinner_choice);
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        binding.spinnerIncomeOutcome.setAdapter(adapter);
 
         binding.closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,36 +99,13 @@ public class EditCategory extends AppCompatActivity {
             }
         });
 
-        if (selectedCategory != null) {
-            // Điền dữ liệu Category vào các trường EditText, ImageView, Spinner, ...
-            // Ví dụ: binding.inputCategoryName.setText(selectedCategory.getCategoryName());
-            // ...
-            binding.inputCategoryName.setText(selectedCategory.getCategoryName());
-            binding.categoryIcon.setImageResource(categoryImages[selectedCategory.getCategoryImage()]);
 
-            if (selectedCategory.getCategoryType().equals("Thu nhập")) {
-                binding.spinnerIncomeOutcome.setSelection(1);
-                // Select the second item in the Spinner (index 1) for "Thu nhập"
-            }
-            if (selectedCategory.getCategoryType().equals("Chi tiêu")) {
-                binding.spinnerIncomeOutcome.setSelection(0); // Select the first item in the Spinner (index 0) for "Chi tiêu"
-            }
-
-            binding.save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Lưu thông tin chỉnh sửa của Category vào Firestore
-                    updateCategory(selectedCategory); // Tạo phương thức này để cập nhật thông tin Category lên Firestore
-                }
-            });
-        }
     }
     // Phương thức để cập nhật thông tin Category lên Firestore
     private void updateCategory(Category category) {
         fStore.collection("categories").document(category.getCategoryID())
                 .update("categoryName",  binding.inputCategoryName.getText().toString(),
-                        "categoryImage",  iconURL[0],
-                        "categoryType", category.getCategoryType())
+                        "categoryImage",  iconURL)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -146,6 +122,27 @@ public class EditCategory extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Cập nhật loại chi tiêu thất bại!", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onFailure: +" + e.toString());
                         // Xử lý lỗi (nếu cần thiết)
+                    }
+                });
+
+        Map<String, Object> updatedData = new HashMap<>();
+        updatedData.put("expenseImage", iconURL);
+        updatedData.put("expenseName", binding.inputCategoryName.getText().toString());
+
+        fStore.collection("expenses")
+                .whereEqualTo("categoryID", category.getCategoryID())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                document.getReference().update(updatedData);
+                            }
+                            Log.e(TAG, "Cập nhật tên giới hạn chi tiêu thành công!");
+                        } else {
+                            Log.e(TAG, "Error getting categories: ", task.getException());
+                        }
                     }
                 });
     }

@@ -9,7 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportFragment extends Fragment {
@@ -25,7 +31,7 @@ public class ReportFragment extends Fragment {
     private List<String> xValues;
 
     double cFirst, tFirst, cSecond, tSecond, cThird, tThird, cFourth, tFourth, cFifth, tFifth, cSixth, tSixth, cToday, tToday;
-
+    PieChart pieChartExpense, pieChartRevenue;
     public ReportFragment() {
         // Required empty public constructor
     }
@@ -51,7 +57,36 @@ public class ReportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_report, container, false);
+        View view = inflater.inflate(R.layout.ui_report, container, false);
+        pieChartExpense = view.findViewById(R.id.pieChartExpense);
+        pieChartRevenue = view.findViewById(R.id.pieChartRevenue);
+        setupChartView();
+
         return view;
+    }
+
+    private void setupChartView() {
+        ArrayList<PieEntry> entries = new ArrayList<>();
+
+        entries.add(new PieEntry(500000, "12/12/2023"));
+        entries.add(new PieEntry(500000, "13/12/2023"));
+        entries.add(new PieEntry(500000, "14/12/2023"));
+        entries.add(new PieEntry(500000, "15/12/2023"));
+
+        PieDataSet pieDataSet = new PieDataSet(entries, "Date");
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        PieData pieData = new PieData(pieDataSet);
+        pieChartExpense.setData(pieData);
+        pieChartRevenue.setData(pieData);
+
+        pieChartExpense.getDescription().setEnabled(false);
+        pieChartExpense.animateY(1000);
+        pieChartExpense.invalidate();
+
+        pieChartRevenue.getDescription().setEnabled(false);
+        pieChartRevenue.animateY(1000);
+        pieChartRevenue.invalidate();
+
     }
 }

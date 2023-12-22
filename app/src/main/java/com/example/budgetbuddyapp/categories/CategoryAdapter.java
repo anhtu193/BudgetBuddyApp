@@ -20,10 +20,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.budgetbuddyapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -55,6 +59,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         ImageView categoryIcon = (ImageView) view.findViewById(R.id.categoryIcon);
 
         Category category = getItem(i);
+
         categoryName.setText(category.getCategoryName());
         categoryIcon.setImageResource(categoryImages[category.getCategoryImage()]);
         ImageView deleteCategory = view.findViewById(R.id.deleteCategory);
@@ -129,6 +134,33 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
                         Log.d(TAG, "onFailure: +" + e.toString());
                     }
                 });
+
+        // xóa luôn giới hạn chi tiêu cho category bị xóa
+        fStore.collection("expenses").whereEqualTo("categoryID", categoryToDelete.getCategoryID()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        // Lấy reference của document và xóa nó
+                        document.getReference().delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "Đã xóa thành công giới hạn rỗng của loại chi tiêu bị xóa");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error deleting document", e);
+                                    }
+                                });
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
     }
 }

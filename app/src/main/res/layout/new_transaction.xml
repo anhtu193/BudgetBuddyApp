@@ -67,68 +67,70 @@
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="359dp"
         android:layout_height="171dp"
-        app:layout_constraintTop_toBottomOf="@id/titleTransactionInfo"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/border_radius_7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/border_radius_7"
-        android:layout_marginTop="14dp">
+        app:layout_constraintTop_toBottomOf="@id/titleTransactionInfo">
+
         <ImageView
             android:id="@+id/dateIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="17dp"
             android:layout_marginLeft="12dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="17dp"
+            android:src="@drawable/date"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@drawable/date"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5-10-2023"
-            android:textSize="16sp"
-            android:fontFamily="@font/montserrat_regular"
-            android:textColor="@color/black"
-            app:layout_constraintLeft_toRightOf="@id/dateIcon"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="22dp"
-            android:layout_marginLeft="16dp"/>
+            android:fontFamily="@font/montserrat_regular"
+            android:text="5-10-2023"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/dateIcon"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/timeIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="66dp"
             android:layout_marginLeft="12dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="66dp"
+            android:src="@drawable/time"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@drawable/time"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12:08"
-            android:textSize="16sp"
-            android:fontFamily="@font/montserrat_regular"
-            android:textColor="@color/black"
-            app:layout_constraintLeft_toRightOf="@id/dateIcon"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="71dp"
-            android:layout_marginLeft="16dp"/>
+            android:fontFamily="@font/montserrat_regular"
+            android:text="12:08"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/dateIcon"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/noteIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="115dp"
             android:layout_marginLeft="12dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="115dp"
+            android:src="@drawable/note"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@drawable/note"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/note"
@@ -143,6 +145,107 @@
             android:layout_marginTop="120dp"
             android:background="@android:color/transparent"
             android:layout_marginLeft="16dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="359dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_radius_7"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        android:layout_marginTop="12dp"
+        android:padding="20dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/expenseImage"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_gravity="center"
+                android:src="@drawable/food" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/expenseName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Ăn uống"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/expenseTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:text="October - 2023"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/expenseProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="12dp"
+                android:progressDrawable="@drawable/custom_progress_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/expenseCurrent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="1,000,000"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/expenseLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="5,000,000"
+                    android:textColor="@color/green"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

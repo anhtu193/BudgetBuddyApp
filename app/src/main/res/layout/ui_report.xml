@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_revenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="137dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Khoản thu"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_revenue_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="10,000,000"
+                android:textColor="@color/green"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_revenue" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/chartRevenueBox"
+                android:layout_width="317dp"
+                android:layout_height="420dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/border_shadow"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_revenue_number">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChartRevenue"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ListView
+                    android:id="@+id/recentRevenue"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="13dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Khoản chi"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chartRevenueBox" />
+
+            <TextView
+                android:id="@+id/tv_expense_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="10,000,000"
+                android:textColor="@color/red"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_expense" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/chartExpenseBox"
+                android:layout_width="317dp"
+                android:layout_height="420dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/border_shadow"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_expense_number">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChartExpense"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ListView
+                    android:id="@+id/recentExpense"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

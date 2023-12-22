@@ -95,7 +95,7 @@ public class AddNewCategory extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
+        String documentId;
         binding.addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +128,30 @@ public class AddNewCategory extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG, "Category ID updated successfully.");
+                                            Map<String, Object> expenseData = new HashMap<>();
+                                            expenseData.put("userID", userID);
+                                            expenseData.put("expenseName" , binding.inputCategoryName.getText().toString());
+                                            expenseData.put("categoryID", documentId);
+                                            expenseData.put("expenseLimit", 0);
+                                            expenseData.put("expenseImage" , iconURL[0]);
+                                            expenseData.put("expenseTime", "Chưa đặt giới hạn");
+                                            String expenseID = fStore.collection("expenses").document().getId();
+                                            expenseData.put("expenseID", expenseID);
+                                            expenseData.put("expenseCurrent", 0);
+
+                                            fStore.collection("expenses").document(expenseID).set(expenseData)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Log.e(TAG, "Expense rỗng đã được tạo cho category với ID: " + documentId);
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, "Lỗi add Expense rỗng cho category với ID " + documentId, e);
+                                                        }
+                                                    });
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -144,6 +168,7 @@ public class AddNewCategory extends AppCompatActivity {
                             Log.d(TAG, "onFailure: +" + e.toString());
                         }
                     });
+
 
                     finish();
                 }
