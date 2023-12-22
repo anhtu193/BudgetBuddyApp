@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/closeButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginLeft="20dp"
@@ -32,6 +33,7 @@
             android:textSize="20dp" />
 
         <ImageView
+            android:id="@+id/addNewTransaction"
             android:layout_width="29dp"
             android:layout_height="29dp"
             android:layout_alignParentEnd="true"
@@ -45,17 +47,22 @@
             android:layout_height="49dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="66dp"
-            android:src="@drawable/food" />
+            android:src="@drawable/no_category_selected" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/transactionAmount"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="67dp"
+            android:textAlignment="viewEnd"
+            android:ellipsize="end"
             android:layout_marginRight="32dp"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="500,000"
+            android:hint="Nhập số tiền"
+            android:textColorHint="@color/gainsboro"
             android:textColor="@color/white"
+            android:background="@android:color/transparent"
             android:textSize="32dp" />
     </RelativeLayout>
 
@@ -123,17 +130,18 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:src="@drawable/note"/>
 
-        <TextView
+        <EditText
             android:id="@+id/note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lương thực tháng 7"
+            android:hint="Thêm ghi chú"
             android:textSize="16sp"
             android:fontFamily="@font/montserrat_regular"
             android:textColor="@color/note"
             app:layout_constraintLeft_toRightOf="@id/noteIcon"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="120dp"
+            android:background="@android:color/transparent"
             android:layout_marginLeft="16dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

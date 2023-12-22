@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -35,7 +36,7 @@
                 android:layout_marginLeft="35dp"
                 android:layout_marginTop="7dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Lý Thanh Tú Anh"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -76,7 +77,7 @@
                     android:id="@+id/balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9,999,250 đ"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:fontFamily="@font/montserrat_medium"
@@ -84,7 +85,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="50dp"
                     android:layout_marginLeft="20dp"/>
-                
+
                 <ImageView
                     android:id="@+id/hideBalance"
                     android:layout_width="27dp"
@@ -205,7 +206,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="17dp"
                 android:layout_marginRight="38dp"/>
-            
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/recentTrasactionBox"
                 android:layout_width="317dp"
@@ -222,7 +223,16 @@
                     android:layout_height="200dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                    app:layout_constraintRight_toRightOf="parent">
+
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:layout_width="317dp"-->
+<!--                        android:layout_height="200dp"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:background="@drawable/border_shadow">-->
+
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+                </ListView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -250,52 +260,6 @@
                 android:layout_marginTop="17dp"
                 android:layout_marginRight="38dp"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="317dp"
-                android:layout_height="200dp"
-                android:background="@drawable/border_shadow"
-                app:layout_constraintTop_toBottomOf="@id/categoryViewAll"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="8dp">
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:labelVisibilityMode="labeled"
-                android:layout_marginEnd="16dp"
-                app:itemIconTint="@drawable/bottom_navigation_selector"
-                app:itemTextColor="@drawable/bottom_navigation_selector"
-                app:menu="@menu/nav_menu" />
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add"
-            app:layout_anchor="@id/bottomAppBar"
-            app:backgroundTint="#03A700"
-            app:maxImageSize="30dp"
-            app:borderWidth="0dp"
-            android:id="@+id/addNewTransaction"/>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

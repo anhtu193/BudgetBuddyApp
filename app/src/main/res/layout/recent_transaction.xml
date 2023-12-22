@@ -14,6 +14,7 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <ImageView
+            android:id="@+id/backButton"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:src="@drawable/back_icon"
@@ -31,13 +32,16 @@
     </RelativeLayout>
 
     <ListView
+        android:id="@+id/transactionListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_height="670dp"
+        android:scrollbarStyle="insideInset"
+        android:divider="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@id/titleRecentTransaction"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
+        android:id="@+id/addNewTransaction"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
