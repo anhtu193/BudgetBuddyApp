@@ -15,6 +15,7 @@
             android:src="@drawable/ellipse" />
 
         <ImageView
+            android:id="@+id/goalImage"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/smartphone"
@@ -29,6 +30,7 @@
         android:layout_marginLeft="13dp">
 
         <TextView
+            android:id="@+id/goalName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"

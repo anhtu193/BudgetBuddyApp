@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.budgetbuddyapp.Profile.Editprofile;
+import com.example.budgetbuddyapp.Profile.Profile;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -18,11 +21,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class Home extends AppCompatActivity {
-    TextView fullName, balance, categoryNumber, goalNumber, budgetNumber;
+    TextView fullName, balance, categoryNumber, goalNumber, budgetNumber, txtViewUserName;
     ImageView hideBalance, notification;
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
+    Button btn_profile;
+    public static final String SHARED_PREFS = "sharePrefs"; // đăng xuất
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class Home extends AppCompatActivity {
         goalNumber = findViewById(R.id.goalNumber);
         hideBalance = findViewById(R.id.hideBalance);
         notification = findViewById(R.id.imgViewNotification);
+        btn_profile = findViewById(R.id.btn_profile);
 
         final boolean[] isPasswordVisible = {false};
 
@@ -81,6 +87,13 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Home.this, CategoryHome.class ));
+            }
+        });
+
+        //Profile (tạm)
+        btn_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { startActivity(new Intent(Home.this, Profile.class ));
             }
         });
     }

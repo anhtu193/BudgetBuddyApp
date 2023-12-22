@@ -12,13 +12,16 @@
         android:theme="@style/Theme.BudgetBuddyApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddNewCategory"
+            android:name=".Profile.ChangePassword"
             android:exported="false" />
         <activity
-            android:name=".CategoryHome"
+            android:name=".Login.ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".Login.ForgotPasswordSuccessfully"
+            android:exported="false" />
+        <activity
+            android:name=".Login.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +30,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".Profile.Profile"
+            android:exported="false" />
+        <activity
+            android:name=".AddNewCategory"
+            android:exported="false" />
+        <activity
+            android:name=".CategoryHome"
+            android:exported="false" />
+        <activity
+            android:name=".Login.Login"
+            android:exported="true" />
+        <activity
+            android:name=".Login.Register"
             android:exported="false" />
         <activity
             android:name=".Home"

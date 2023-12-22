@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Login.Login">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,9 +12,10 @@
         android:id="@+id/welcome"
         android:text="@string/welcome"
         android:textSize="28sp"
-        android:fontFamily="@font/montserrat_medium"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="40dp"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginHorizontal="30dp" />
@@ -33,9 +34,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/incorrect"
         android:text="@string/incorrect"
-        android:textSize="20sp"
-        android:padding="10dp"
+        android:textSize="13sp"
+        android:fontFamily="@font/montserrat_medium"
+        android:padding="5dp"
         android:visibility="invisible"
+        android:textColor="@color/red"
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintBottom_toTopOf="@id/login_email"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -47,12 +50,14 @@
         android:id="@+id/login_email"
         android:hint="@string/email"
         android:fontFamily="@font/montserrat_semibold"
+        android:background="@drawable/custom_edt"
         android:textSize="16sp"
         android:padding="15dp"
         app:layout_constraintTop_toBottomOf="@+id/incorrect"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginHorizontal="35dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/login_password" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -63,10 +68,12 @@
         android:textSize="16sp"
         android:inputType="textPassword"
         android:fontFamily="@font/montserrat_semibold"
+        android:background="@drawable/custom_edt"
         android:padding="15dp"
         app:layout_constraintTop_toBottomOf="@+id/login_email"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="15dp"
         android:layout_marginHorizontal="35dp" />
 
     <TextView
@@ -147,5 +154,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="60dp"
         />
+
+    <CheckBox
+        android:id="@+id/check_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lưu đăng nhập"
+        android:textSize="16sp"
+        android:textColor="@color/green"
+        android:fontFamily="@font/montserrat_bold"
+        app:layout_constraintTop_toBottomOf="@+id/login_password"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        android:layout_marginLeft="35dp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
