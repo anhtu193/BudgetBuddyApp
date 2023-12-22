@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Home">
 
-    <androidx.drawerlayout.widget.DrawerLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -56,6 +55,7 @@
                         android:textSize="15sp"
                         android:textColor="@color/black"/>
                     <TextView
+                        android:id="@+id/balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -109,7 +109,7 @@
                     <!-- Item -->
                     <ListView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="200dp"/>
 
                 </LinearLayout>
 
@@ -128,10 +128,23 @@
                         android:text="Giới hạn chi tiêu"
                         android:textColor="@color/black"/>
 
-                    <!--                Item -->
+                    <TextView
+                        android:id="@+id/noExpense"
+                        android:layout_width="300dp"
+                        android:layout_height="100dp"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        android:text="Có vẻ bạn chưa thêm loại chi tiêu nào cả, hãy thêm loại chi tiêu để có thể đặt giới hạn cho chúng nhé!"
+                        android:textColor="@color/black"/>
+
+                    <!-- Item -->
                     <ListView
+                        android:id="@+id/expenseListView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="200dp"
                         android:layout_marginTop="8dp" />
 
                 </LinearLayout>
@@ -139,6 +152,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.drawerlayout.widget.DrawerLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

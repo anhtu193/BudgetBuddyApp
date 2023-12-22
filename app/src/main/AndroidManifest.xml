@@ -12,13 +12,51 @@
         android:theme="@style/Theme.BudgetBuddyApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddNewCategory"
+            android:name=".Navigation"
             android:exported="false" />
         <activity
-            android:name=".CategoryHome"
+            android:name=".transaction.EditTransaction"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".transaction.TransactionInfo"
+            android:exported="false" />
+        <activity
+            android:name=".transaction.RecentTransaction"
+            android:exported="false" />
+        <activity
+            android:name=".transaction.AddNewTransaction"
+            android:exported="false" />
+        <activity
+            android:name=".categories.EditCategory"
+            android:exported="false" />
+        <activity
+            android:name=".categories.AddNewCategory"
+            android:exported="false" />
+        <activity
+            android:name=".categories.CategoryHome"
+            android:exported="false" />
+        <activity
+            android:name=".expense.AddNewExpense"
+            android:exported="false" />
+        <activity
+            android:name=".expense.ExpenseEdit"
+            android:exported="false" />
+
+        <activity
+            android:name=".expense.ExpenseEditScreen"
+            android:exported="false" />
+
+        <activity
+            android:name=".Profile.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".Login.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".Login.ForgotPasswordSuccessfully"
+            android:exported="false" />
+        <activity
+            android:name=".Login.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +65,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
+            android:name=".Profile.Editprofile"
             android:exported="false" />
         <activity
-            android:name=".Home"
+            android:name=".Login.Login"
             android:exported="true" />
+        <activity
+            android:name=".Login.Register"
+            android:exported="false" />
     </application>
 
 </manifest>

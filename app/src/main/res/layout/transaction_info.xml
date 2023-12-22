@@ -14,6 +14,7 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <ImageView
+            android:id="@+id/closeButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/close"
@@ -30,6 +31,7 @@
             android:textSize="20dp" />
 
         <ImageView
+            android:id="@+id/editTransaction"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@drawable/edit"
@@ -39,6 +41,7 @@
             android:layout_marginLeft="20dp"/>
 
         <ImageView
+            android:id="@+id/deleteTransaction"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@drawable/delete"
@@ -81,7 +84,7 @@
             android:layout_marginTop="21dp"/>
 
         <TextView
-            android:id="@+id/money"
+            android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="500,000"

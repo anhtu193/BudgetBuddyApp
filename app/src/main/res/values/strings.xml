@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">BudgetBuddyApp</string>
-    <string name="welcome">Chào mừng bạn!</string>
+    <string name="app_name">Budget Buddy</string>
+    <string name="welcome">CHÀO MỪNG BẠN!</string>
     <string name="email">Email</string>
     <string name="password">Mật khẩu</string>
     <string name="incorrect">Email hoặc mật khẩu sai</string>
@@ -20,4 +20,5 @@
     <string name="editprofile">"Chỉnh sửa thông tin "</string>
     <string name="changepassword">Đổi mật khẩu</string>
     <string name="logout">Đăng xuất</string>
+    <string name="countinue">Tiếp tục</string>
 </resources>
