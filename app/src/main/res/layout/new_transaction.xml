@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_marginTop="12dp"
-                android:progressDrawable="@drawable/custom_progress_bg" />
+                android:progressDrawable="@drawable/custom_progress_bar" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -2,11 +2,13 @@ package com.example.budgetbuddyapp.expense;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -26,7 +28,7 @@ public class ExpenseAdapter extends ArrayAdapter<Expense> {
     private static final int VIEW_TYPE_PROGRESS = 1;
 
     public ExpenseAdapter(Fragment fragment, int layoutID, List<Expense> expenseList) {
-        super(fragment.requireActivity(), layoutID, expenseList);
+        super(fragment.isAdded() ? fragment.requireActivity() : null, layoutID, expenseList);
         this.fragment  = fragment ;
         this.expenseList = expenseList;
     }
@@ -90,15 +92,30 @@ public class ExpenseAdapter extends ArrayAdapter<Expense> {
 
                 ImageView expenseImage = convertView.findViewById(R.id.expenseImage);
                 TextView expenseName = convertView.findViewById(R.id.expenseName);
-                TextView expenseLimit = convertView.findViewById(R.id.expenseLimit);
                 TextView expenseTime = convertView.findViewById(R.id.expenseTime);
                 TextView expenseCurrent = convertView.findViewById(R.id.expenseCurrent);
+                TextView expenseLimit = convertView.findViewById(R.id.expenseLimit);
 
                 expenseName.setText(expense.getExpenseName());
                 expenseImage.setImageResource(categoryImages[expense.getExpenseImage()]);
-                expenseLimit.setText(NumberFormat.getNumberInstance(Locale.US).format(expense.getExpenseLimit()));
                 expenseTime.setText(expense.getExpenseTime());
+
+                ProgressBar progressBar = convertView.findViewById(R.id.progressBar);
+                int CurrentProgress = (int) ((float) expense.getExpenseCurrent() / expense.getExpenseLimit() * 100);
+
+                if (CurrentProgress >= 100) {
+                    CurrentProgress = 100;
+                    progressBar.getProgressDrawable().setColorFilter(
+                            Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+                    expenseCurrent.setTextColor(Color.RED);
+                } else {
+                    expenseCurrent.setTextColor(Color.BLACK);
+                }
+
+                progressBar.setProgress(CurrentProgress);
+
                 expenseCurrent.setText(NumberFormat.getNumberInstance(Locale.US).format(expense.getExpenseCurrent()));
+                expenseLimit.setText(NumberFormat.getNumberInstance(Locale.US).format(expense.getExpenseLimit()));
 
                 // Set the click listener for the expense item
                 convertView.setOnClickListener(new View.OnClickListener() {

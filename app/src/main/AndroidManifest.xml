@@ -36,12 +36,20 @@
             android:name=".categories.CategoryHome"
             android:exported="false" />
         <activity
+            android:name=".goal.AddNewGoal"
+            android:exported="false" />
+        <activity
+            android:name=".goal.GoalFund"
+            android:exported="false" />
+        <activity
+            android:name=".goal.GoalEdit"
+            android:exported="false" />
+        <activity
             android:name=".expense.AddNewExpense"
             android:exported="false" />
         <activity
             android:name=".expense.ExpenseEdit"
             android:exported="false" />
-
         <activity
             android:name=".expense.ExpenseEditScreen"
             android:exported="false" />
