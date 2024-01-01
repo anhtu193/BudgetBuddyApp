@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +26,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -36,6 +40,38 @@ public class ExpenseEditScreen extends AppCompatActivity {
     UiExpenseEditScreenBinding binding;
     FirebaseAuth auth;
     FirebaseFirestore fStore;
+    String expenseID;
+    int expenseCurrent;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int[] categoryImages = {R.drawable.food, R.drawable.c_electricitybill, R.drawable.c_fuel, R.drawable.c_clothes,
+                R.drawable.c_bonus, R.drawable.c_shopping, R.drawable.c_book, R.drawable.c_salary, R.drawable.c_wallet,
+                R.drawable.c_phone, R.drawable.c_celebration, R.drawable.c_makeup, R.drawable.c_celebration2, R.drawable.c_basketball, R.drawable.c_gardening};
+        DocumentReference documentReference = fStore.collection("expenses").document(expenseID);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.e(ContentValues.TAG, "Listen failed: " + error);
+                    return;
+                }
+                if (value != null && value.exists()) {
+                    Number expense = value.getLong("expenseLimit");
+                    int expenseLimit = expense.intValue();
+
+                    binding.expenseLimitRemaining.setText(String.format("%,d", expenseLimit));
+                    binding.expenseLimit.setText(String.format("%,d", expenseLimit) + " đ");
+                    // Cập nhật giao diện người dùng với dữ liệu mới từ Firestore
+
+                    Log.d(ContentValues.TAG, "Expense limit updated ID: " + expenseID);
+                } else {
+                    Log.d(ContentValues.TAG, "No such document with ID: " + expenseID);
+                }
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +88,12 @@ public class ExpenseEditScreen extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
+            expenseID = intent.getStringExtra("expenseID");
             String expenseName = intent.getStringExtra("expenseName");
             String expenseTime = intent.getStringExtra("expenseTime");
             int expenseImage = intent.getIntExtra("expenseImage", 0);
             int expenseLimit = intent.getIntExtra("expenseLimit", 0);
-            int expenseCurrent = intent.getIntExtra("expenseCurrent", 0);
+            expenseCurrent = intent.getIntExtra("expenseCurrent", 0);
             if (!expenseTime.equals("Tất cả các tháng")) {
                 // Get the current date
                 Calendar calendar = Calendar.getInstance();
@@ -76,15 +113,13 @@ public class ExpenseEditScreen extends AppCompatActivity {
                 binding.expenseTimeRemaining.setText("");
             }
 
-            int expenseLeft = expenseLimit - expenseCurrent;
-
             // update UI accordingly
             binding.expenseName.setText(expenseName);
             binding.expenseTime.setText(expenseTime);
             binding.expenseImage.setImageResource(categoryImages[expenseImage]);
 
             ProgressBar progressBar = binding.progressBar;
-            int CurrentProgress = (int) ((float) expenseCurrent / expenseLeft * 100);
+            int CurrentProgress = (int) ((float) expenseCurrent / expenseLimit * 100);
 
             if (CurrentProgress >= 100) {
                 CurrentProgress = 100;
@@ -101,7 +136,7 @@ public class ExpenseEditScreen extends AppCompatActivity {
 
             binding.expenseLimit.setText(String.format("%,d", expenseLimit) + " đ");
             binding.expenseCurrent.setText(String.format("%,d", expenseCurrent));
-            binding.expenseLimitRemaining.setText(String.format("%,d", expenseLeft));
+            binding.expenseLimitRemaining.setText(String.format("%,d", expenseLimit));
         }
 
         binding.closeButton.setOnClickListener(new View.OnClickListener() {

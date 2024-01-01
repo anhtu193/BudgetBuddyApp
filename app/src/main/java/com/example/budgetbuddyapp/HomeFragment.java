@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         CategoryApdater = new ViewPagerAdapter(fragmentManager, getLifecycle());
-
+        TextView noItem = (TextView) view.findViewById(R.id.noItem);
         viewPager.setAdapter(CategoryApdater);
         final boolean[] isPasswordVisible = {false};
 
@@ -142,9 +142,6 @@ public class HomeFragment extends Fragment {
                 if (value != null && value.exists()) {
                     String fullNameText = value.getString("fullname");
                     Long balanceValue = value.getLong("balance");
-                    Long categoriesValue = value.getLong("categories");
-                    Long budgetsValue = value.getLong("budgets");
-                    Long goalsValue = value.getLong("goals");
 
                     // Cập nhật giao diện người dùng với dữ liệu mới từ Firestore
                     fullName.setText(fullNameText != null ? fullNameText : "");
@@ -206,7 +203,12 @@ public class HomeFragment extends Fragment {
                             String time = document.getString("time");
                             transactionList.add(new Transaction(transactionID, userID, categoryID, note, date, time, amount));
                         }
-
+                        if (transactionList.isEmpty()) {
+                            noItem.setVisibility(View.VISIBLE);
+                        } else
+                        {
+                            noItem.setVisibility(View.GONE);
+                        }
                         if (adapter == null) {
                             adapter = new HomeTransactionAdapter(HomeFragment.this, R.layout.transaction_item, transactionList);
                             recentTrasactions.setAdapter(adapter);
@@ -234,9 +236,6 @@ public class HomeFragment extends Fragment {
                 if (value != null && value.exists()) {
                     String fullNameText = value.getString("fullname");
                     Long balanceValue = value.getLong("balance");
-                    Long categoriesValue = value.getLong("categories");
-                    Long budgetsValue = value.getLong("budgets");
-                    Long goalsValue = value.getLong("goals");
 
                     // Cập nhật giao diện người dùng với dữ liệu mới từ Firestore
                     fullName.setText(fullNameText != null ? fullNameText : "");

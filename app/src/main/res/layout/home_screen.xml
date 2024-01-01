@@ -126,7 +126,20 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/transactionViewAll">
-
+                <TextView
+                    android:id="@+id/noItem"
+                    android:layout_marginTop="65dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Có vẻ bạn tạo giao dịch nào cả, hãy tạo thêm giao dịch để theo dõi nhé!"
+                    android:textAlignment="center"
+                    android:lineHeight="25dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingHorizontal="20dp"
+                    android:textSize="16sp"
+                    />
                 <ListView
                     android:id="@+id/recentTrasactions"
                     android:layout_width="match_parent"

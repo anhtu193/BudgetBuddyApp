@@ -44,6 +44,42 @@ public class GoalFund extends AppCompatActivity {
     String userID;
     FirebaseAuth auth;
     FirebaseFirestore fStore;
+
+    String goalID;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int[] categoryImages = {R.drawable.food, R.drawable.c_electricitybill, R.drawable.c_fuel, R.drawable.c_clothes,
+                R.drawable.c_bonus, R.drawable.c_shopping, R.drawable.c_book, R.drawable.c_salary, R.drawable.c_wallet,
+                R.drawable.c_phone, R.drawable.c_celebration, R.drawable.c_makeup, R.drawable.c_celebration2, R.drawable.c_basketball, R.drawable.c_gardening};
+        DocumentReference documentReference = fStore.collection("goals").document(goalID);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.e(ContentValues.TAG, "Listen failed: " + error);
+                    return;
+                }
+                if (value != null && value.exists()) {
+                    String goalName = value.getString("goalName");
+                    Long goalNumber = value.getLong("goalNumber");
+                    Number goalImageIndex = value.getLong("goalImage");
+                    int goalImage = goalImageIndex.intValue();
+                    String date = value.getString("date");
+
+                    // Cập nhật giao diện người dùng với dữ liệu mới từ Firestore
+                    binding.date.setText(date);
+                    binding.goalName.setText(goalName != null ? goalName : "");
+                    binding.goalNumber.setText(String.format("%,d", goalNumber));
+                    binding.goalImage.setImageResource(categoryImages[goalImage]);
+                    Log.d(ContentValues.TAG, "Goal Info updated ID: " + goalID);
+                } else {
+                    Log.d(ContentValues.TAG, "No such document with ID: " + goalID);
+                }
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +96,7 @@ public class GoalFund extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
+            goalID = intent.getStringExtra("goalID");
             String goalName = intent.getStringExtra("goalName");
             String date = intent.getStringExtra("date");
             int goalImage = intent.getIntExtra("goalImage", 0);
@@ -170,9 +207,10 @@ public class GoalFund extends AppCompatActivity {
                                             finish();
 
                                             // Refresh the BudgetHome activity
-                                            Intent refreshIntent = new Intent(GoalFund.this, Navigation.class);
-                                            refreshIntent.putExtra("selectedTab", 2);
-                                            startActivity(refreshIntent);
+//                                            Intent refreshIntent = new Intent(GoalFund.this, Navigation.class);
+//                                            refreshIntent.putExtra("selectedTab", 2);
+//                                            startActivity(refreshIntent);
+                                            finish();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {

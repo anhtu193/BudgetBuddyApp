@@ -327,69 +327,138 @@ public class ReportFragment extends Fragment {
         final ArrayList<Transaction> transactionList = new ArrayList<>();
 
         // Fetch data from Firestore for the last 7 days
+//        fStore.collection("transactions")
+//                .whereEqualTo("userID", userID)
+//                .whereIn("date", sevenDays)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            final Map<String, Double> totalAmountMap = new HashMap<>();
+//
+//                            transactionList.clear(); // Xóa dữ liệu cũ trước khi cập nhật mới
+//
+//                            for (QueryDocumentSnapshot transactionDoc : task.getResult()) {
+//                                String categoryId = transactionDoc.getString("categoryId");
+//
+//                                String transactionID = transactionDoc.getString("transactionId");
+//                                String categoryID = transactionDoc.getString("categoryId");
+//                                String note = transactionDoc.getString("note");
+//                                Long amount = transactionDoc.getLong("amount");
+//                                String date = transactionDoc.getString("date");
+//                                String time = transactionDoc.getString("time");
+//
+//                                Transaction transaction = new Transaction(transactionID, userID, categoryID, note, date, time, amount);
+//
+//                                if (categoryId != null) {
+//                                    fStore.collection("categories")
+//                                            .document(categoryId)
+//                                            .get()
+//                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                                                @Override
+//                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                                                    if (documentSnapshot.exists()) {
+//                                                        String categoryType = documentSnapshot.getString("categoryType");
+//                                                        String date = transactionDoc.getString("date");
+//
+//                                                        if (categoryType.equals(type) && sevenDays.contains(date)) {
+//                                                            double amount = transactionDoc.getDouble("amount");
+//
+//                                                            // Update the total amount for the specific date
+//                                                            totalAmountMap.put(date, totalAmountMap.getOrDefault(date, 0.0) + amount);
+//
+    //                                                            transactionList.add(transaction);
+//                                                        }
+//
+//                                                        // Update UI after processing all documents
+//                                                        updateUI(pieChart, type, totalAmountMap);
+//
+//                                                        TransactionAdapter adapter = (TransactionAdapter) listView.getAdapter();
+//
+//                                                        if (adapter == null) {
+//                                                            adapter = new TransactionAdapter(getActivity(), R.layout.transaction_item, transactionList, getContext());
+//                                                            listView.setAdapter(adapter);
+//                                                        } else {
+//                                                            adapter.notifyDataSetChanged();
+//                                                        }
+//                                                    }
+//                                                }
+//                                            });
+//                                }
+//                            }
+//                        }
+//                    }
+//                });
         fStore.collection("transactions")
                 .whereEqualTo("userID", userID)
                 .whereIn("date", sevenDays)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            final Map<String, Double> totalAmountMap = new HashMap<>();
+                    public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            // Xử lý lỗi nếu có
+                            return;
+                        }
 
-                            transactionList.clear(); // Xóa dữ liệu cũ trước khi cập nhật mới
+                        final Map<String, Double> totalAmountMap = new HashMap<>();
+                        transactionList.clear(); // Xóa dữ liệu cũ trước khi cập nhật mới
 
-                            for (QueryDocumentSnapshot transactionDoc : task.getResult()) {
-                                String categoryId = transactionDoc.getString("categoryId");
+                        for (QueryDocumentSnapshot transactionDoc : querySnapshot) {
+                            String categoryId = transactionDoc.getString("categoryId");
 
-                                String transactionID = transactionDoc.getString("transactionId");
-                                String categoryID = transactionDoc.getString("categoryId");
-                                String note = transactionDoc.getString("note");
-                                Long amount = transactionDoc.getLong("amount");
-                                String date = transactionDoc.getString("date");
-                                String time = transactionDoc.getString("time");
+                            if (categoryId != null) {
+                                fStore.collection("categories")
+                                        .document(categoryId)
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                if (documentSnapshot.exists()) {
+                                                    String categoryType = documentSnapshot.getString("categoryType");
+                                                    String date = transactionDoc.getString("date");
 
-                                Transaction transaction = new Transaction(transactionID, userID, categoryID, note, date, time, amount);
+                                                    if (categoryType.equals(type) && sevenDays.contains(date)) {
+                                                        Long amount = transactionDoc.getLong("amount");
 
-                                if (categoryId != null) {
-                                    fStore.collection("categories")
-                                            .document(categoryId)
-                                            .get()
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                    if (documentSnapshot.exists()) {
-                                                        String categoryType = documentSnapshot.getString("categoryType");
-                                                        String date = transactionDoc.getString("date");
+                                                        // Update the total amount for the specific date
+                                                        totalAmountMap.put(date, totalAmountMap.getOrDefault(date, 0.0) + amount);
 
-                                                        if (categoryType.equals(type) && sevenDays.contains(date)) {
-                                                            double amount = transactionDoc.getDouble("amount");
+                                                        // Create and add Transaction object to the list
+                                                        Transaction transaction = createTransactionFromSnapshot(transactionDoc);
+                                                        transactionList.add(transaction);
+                                                    }
 
-                                                            // Update the total amount for the specific date
-                                                            totalAmountMap.put(date, totalAmountMap.getOrDefault(date, 0.0) + amount);
+                                                    // Update UI after processing all documents
+                                                    updateUI(pieChart, type, totalAmountMap);
 
-                                                            transactionList.add(transaction);
-                                                        }
+                                                    TransactionAdapter adapter = (TransactionAdapter) listView.getAdapter();
 
-                                                        // Update UI after processing all documents
-                                                        updateUI(pieChart, type, totalAmountMap);
-
-                                                        TransactionAdapter adapter = (TransactionAdapter) listView.getAdapter();
-
-                                                        if (adapter == null) {
-                                                            adapter = new TransactionAdapter(getActivity(), R.layout.transaction_item, transactionList, getContext());
-                                                            listView.setAdapter(adapter);
-                                                        } else {
-                                                            adapter.notifyDataSetChanged();
-                                                        }
+                                                    if (adapter == null) {
+                                                        adapter = new TransactionAdapter(getActivity(), R.layout.transaction_item, transactionList, getContext());
+                                                        listView.setAdapter(adapter);
+                                                    } else {
+                                                        adapter.notifyDataSetChanged();
                                                     }
                                                 }
-                                            });
-                                }
+                                            }
+                                        });
                             }
                         }
                     }
                 });
+    }
+
+    private Transaction createTransactionFromSnapshot(QueryDocumentSnapshot transactionDoc) {
+        String transactionID = transactionDoc.getString("transactionId");
+        String userID = transactionDoc.getString("userID");
+        String categoryID = transactionDoc.getString("categoryId");
+        String note = transactionDoc.getString("note");
+        Long amount = transactionDoc.getLong("amount");
+        String date = transactionDoc.getString("date");
+        String time = transactionDoc.getString("time");
+
+        return new Transaction(transactionID, userID, categoryID, note, date, time, amount);
     }
 
     private void updateUI(PieChart pieChart, String type, Map<String, Double> totalAmountMap) {
@@ -407,12 +476,10 @@ public class ReportFragment extends Fragment {
         updatePieChart(pieChart, pieEntries, type);
 
         if (type.equals("Thu nhập")) {
-            int color = ContextCompat.getColor(getContext(), R.color.earn);
-            tv_revenue_number.setTextColor(color);
+            tv_revenue_number.setTextColor(Color.parseColor("#FF00BD40"));
             tv_revenue_number.setText(String.format("%,.0f", totalAmount));
         } else {
-            int color = ContextCompat.getColor(getContext(), R.color.spend);
-            tv_expense_number.setTextColor(color);
+            tv_expense_number.setTextColor(Color.parseColor("#FFFF1D1D"));
             tv_expense_number.setText(String.format("%,.0f", totalAmount));
         }
     }

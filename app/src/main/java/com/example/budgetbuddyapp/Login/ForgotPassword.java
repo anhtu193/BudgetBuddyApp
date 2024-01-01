@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.budgetbuddyapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,17 +35,14 @@ public class ForgotPassword extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        userID = auth.getCurrentUser().getUid();
-
         btn_countinue = findViewById(R.id.btn_countinue);
         btn_backtologin = findViewById(R.id.btn_backtologin2);
         txtview_loginemail = findViewById(R.id.login_email2);
 
-        String emailAddress = txtview_loginemail.getText().toString();
         btn_countinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth.sendPasswordResetEmail(emailAddress)
+                auth.sendPasswordResetEmail(txtview_loginemail.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -53,14 +51,19 @@ public class ForgotPassword extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(), e.toString(),
+                                        Toast.LENGTH_LONG).show();
+                            }
                         });
             }
         });
         btn_backtologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ForgotPassword.this, Login.class);
-                startActivity(intent);
+               onBackPressed();
             }
         });
     }

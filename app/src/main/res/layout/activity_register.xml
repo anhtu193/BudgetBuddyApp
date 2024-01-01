@@ -16,8 +16,8 @@
         android:background="@null"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -134,6 +134,7 @@
         android:id="@+id/or"
         android:text="@string/or"
         android:textSize="16sp"
+        android:visibility="gone"
         android:fontFamily="@font/montserrat_semibold"
         app:layout_constraintTop_toBottomOf="@+id/btn_register"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -143,6 +144,7 @@
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="80dp"
+        android:visibility="gone"
         android:src="@drawable/facebook"
         android:id="@+id/facebook"
         android:scaleType="centerInside"
@@ -157,6 +159,7 @@
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:src="@drawable/new1"
+        android:visibility="gone"
         android:scaleType="centerInside"
         android:id="@+id/gmail"
         app:layout_constraintTop_toBottomOf="@+id/or"

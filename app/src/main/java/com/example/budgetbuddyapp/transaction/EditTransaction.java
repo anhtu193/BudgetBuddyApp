@@ -218,6 +218,45 @@ public class EditTransaction extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 Log.d(TAG, "Transaction document updated successfully!");
                                 updateUserBalance(differenceAmount, categoryType);
+                                if (categoryType.equals("Chi tiêu")) {
+                                    fStore.collection("expenses")
+                                            .whereEqualTo("categoryID", categoryID)
+                                            .get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot querySnapshot) {
+                                                    for (QueryDocumentSnapshot document : querySnapshot) {
+                                                        Long expenseLimit = document.getLong("expenseLimit");
+                                                        String expenseId = document.getId();
+                                                        Log.d(TAG, "expenseLimit: " + expenseLimit);
+                                                        if (expenseLimit != 0) { //nếu có expense limit được tạo
+                                                            Long currentExpense = document.getLong("expenseCurrent");
+                                                            currentExpense += differenceAmount;
+                                                            fStore.collection("expenses").document(expenseId)
+                                                                    .update("expenseCurrent", currentExpense)
+                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                        @Override
+                                                                        public void onSuccess(Void unused) {
+                                                                            Log.d(TAG, "Đã cập nhật expenseCurrent với ID: " + expenseId);
+                                                                        }
+                                                                    })
+                                                                    .addOnFailureListener(new OnFailureListener() {
+                                                                        @Override
+                                                                        public void onFailure(@NonNull Exception e) {
+                                                                            Log.d(TAG, "Lỗi khi cập nhật expenseCurrent với ID: " + expenseId);
+                                                                        }
+                                                                    });
+                                                        }
+                                                    }
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e(TAG, "Error getting documents", e);
+                                                }
+                                            });
+                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -319,7 +358,7 @@ public class EditTransaction extends AppCompatActivity {
     };
 
     private void updateDateInView() {
-        SimpleDateFormat sdf = new SimpleDateFormat("d-M-yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         date.setText(sdf.format(calendar.getTime()));
     }
 }

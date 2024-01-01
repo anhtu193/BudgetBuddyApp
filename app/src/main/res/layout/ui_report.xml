@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingBottom="70dp">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -135,6 +135,7 @@
                     android:id="@+id/recentRevenue"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:nestedScrollingEnabled="true"
                     app:layout_constraintTop_toBottomOf="@id/pieChartRevenue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -190,6 +191,7 @@
                     android:id="@+id/recentExpense"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:nestedScrollingEnabled="true"
                     app:layout_constraintTop_toBottomOf="@+id/pieChartExpense"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -198,6 +200,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.budgetbuddyapp.Navigation;
+import com.example.budgetbuddyapp.Profile.Editprofile;
 import com.example.budgetbuddyapp.R;
 import com.example.budgetbuddyapp.categories.AddNewCategory;
 import com.example.budgetbuddyapp.categories.CategoryHome;
@@ -174,7 +175,7 @@ public class GoalEdit extends AppCompatActivity {
                         iconURL[0] = goalImage;
 
                         Long goalNumber = document.getLong("goalNumber");
-                        binding.inputGoalNumber.setText(String.format("%,d", goalNumber));
+                        binding.inputGoalNumber.setText(goalNumber.toString());
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -200,12 +201,12 @@ public class GoalEdit extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         // Handle successful updat
                         Log.d(TAG, "Cập nhật mục tiêu thành công!");
-
+                        Toast.makeText(GoalEdit.this, "Cập nhật mục tiêu thành công!", Toast.LENGTH_SHORT).show();
                         // Refresh the BudgetHome activity
-                        Intent refreshIntent = new Intent(GoalEdit.this, Navigation.class);
-                        refreshIntent.putExtra("selectedTab", 2);
-                        startActivity(refreshIntent);
-
+//                        Intent refreshIntent = new Intent(GoalEdit.this, Navigation.class);
+//                        refreshIntent.putExtra("selectedTab", 2);
+//                        startActivity(refreshIntent);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

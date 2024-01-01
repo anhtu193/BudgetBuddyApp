@@ -38,7 +38,7 @@ public class HomeTransactionAdapter extends ArrayAdapter<Transaction> {
             R.drawable.c_phone, R.drawable.c_celebration, R.drawable.c_makeup, R.drawable.c_celebration2, R.drawable.c_basketball, R.drawable.c_gardening};
 
     public HomeTransactionAdapter(Fragment fragment, int layoutID, List<Transaction> transactionList) {
-        super(fragment.isAdded() ? fragment.requireActivity() : null ,layoutID, transactionList);
+        super(fragment != null && fragment.isAdded() ? fragment.requireActivity() : null, layoutID, transactionList);
         this.fragment = fragment;
         this.transactionList = transactionList;
     }

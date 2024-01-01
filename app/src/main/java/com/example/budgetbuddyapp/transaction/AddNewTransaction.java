@@ -3,6 +3,7 @@ package com.example.budgetbuddyapp.transaction;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -28,7 +29,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -282,8 +285,70 @@ public class AddNewTransaction extends AppCompatActivity {
                                                 Log.d(TAG, "Failed to update document ID: " + e.toString());
                                             }
                                         });
-                                // update User's balance
-                                updateUserBalance(amount, selectedCategory.getCategoryType());
+
+                                fStore.collection("categories").document(selectedCategory.getCategoryID())
+                                        .get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                       if (documentSnapshot.exists()) {
+                                                           String categoryType = documentSnapshot.getString("categoryType");
+                                                           Log.d(TAG, "categoryType: " + categoryType);
+                                                           // update User's balance
+                                                           updateUserBalance(amount, categoryType);
+                                                           // update if there's an expense created
+
+                                                           if (categoryType.equals("Chi tiêu")) {
+                                                               fStore.collection("expenses")
+                                                                       .whereEqualTo("categoryID", selectedCategory.getCategoryID())
+                                                                       .get()
+                                                                       .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                                           @Override
+                                                                           public void onSuccess(QuerySnapshot querySnapshot) {
+                                                                               for (QueryDocumentSnapshot document : querySnapshot) {
+                                                                                   Long expenseLimit = document.getLong("expenseLimit");
+                                                                                   String expenseId = document.getId();
+                                                                                   Log.d(TAG, "expenseLimit: " + expenseLimit);
+                                                                                   if (expenseLimit != 0) { //nếu có expense limit được tạo
+                                                                                       Long currentExpense = document.getLong("expenseCurrent");
+                                                                                       currentExpense += amount;
+                                                                                       fStore.collection("expenses").document(expenseId)
+                                                                                               .update("expenseCurrent", currentExpense)
+                                                                                               .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                   @Override
+                                                                                                   public void onSuccess(Void unused) {
+                                                                                                       Log.d(TAG, "Đã cập nhật expenseCurrent với ID: " + expenseId);
+                                                                                                   }
+                                                                                               })
+                                                                                               .addOnFailureListener(new OnFailureListener() {
+                                                                                                   @Override
+                                                                                                   public void onFailure(@NonNull Exception e) {
+                                                                                                       Log.d(TAG, "Lỗi khi cập nhật expenseCurrent với ID: " + expenseId);
+                                                                                                   }
+                                                                                               });
+                                                                                   }
+                                                                               }
+                                                                           }
+                                                                       })
+                                                                       .addOnFailureListener(new OnFailureListener() {
+                                                                           @Override
+                                                                           public void onFailure(@NonNull Exception e) {
+                                                                               Log.e(TAG, "Error getting documents", e);
+                                                                           }
+                                                                       });
+                                                           }
+                                                       }
+                                                       else {
+                                                           Log.d(TAG, "No such document");
+                                                       }
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e(TAG, "Error getting category Type", e);
+                                                    }
+                                                });
 
                                 Log.d(TAG, "onSuccess: New transaction created with ID: " + documentReference.getId());
                             }
@@ -412,6 +477,8 @@ public class AddNewTransaction extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             // Xử lý thành công khi cập nhật
+                                            String categoryType = document.getString("categoryType");
+                                            selectedCategory.setCategoryType(categoryType);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
