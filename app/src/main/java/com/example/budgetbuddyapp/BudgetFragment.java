@@ -1,16 +1,17 @@
 package com.example.budgetbuddyapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,10 +19,13 @@ import android.widget.TextView;
 import com.example.budgetbuddyapp.expense.Expense;
 import com.example.budgetbuddyapp.expense.ExpenseAdapter;
 import com.example.budgetbuddyapp.expense.ExpenseProgress;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.budgetbuddyapp.goal.AddNewGoal;
+import com.example.budgetbuddyapp.goal.GoalAdapter;
+import com.example.budgetbuddyapp.goal.Goal;
+import com.example.budgetbuddyapp.transaction.RecentTransaction;
+import com.example.budgetbuddyapp.transaction.TransactionAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -51,10 +55,13 @@ public class BudgetFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
-    ListView expenseListView;
+    ListView expenseListView, goalListView;
     ArrayList<Expense> expenseList;
-    TextView balance, noExpense;
+    ArrayList<Goal> goalList;
+    TextView balance, noExpense, noGoal;
+    Button addNewGoal;
     com.example.budgetbuddyapp.expense.ExpenseAdapter ExpenseAdapter;
+    com.example.budgetbuddyapp.goal.GoalAdapter GoalAdapter;
     private static final int REQUEST_CODE = 1;
     ImageView addExpenseButton;
     public BudgetFragment() {
@@ -90,7 +97,11 @@ public class BudgetFragment extends Fragment {
 
         expenseListView = view.findViewById(R.id.expenseListView);
         noExpense = view.findViewById(R.id.noExpense);
-        expenseList = new ArrayList<>();
+        expenseList = new ArrayList<Expense>();
+
+        goalListView = view.findViewById(R.id.goalListView);
+        noGoal = view.findViewById(R.id.noGoal);
+        goalList = new ArrayList<Goal>();
 
         balance = view.findViewById(R.id.balance);
         DocumentReference documentReference = fStore.collection("users").document(userID);
@@ -104,6 +115,16 @@ public class BudgetFragment extends Fragment {
             }
         });
 
+        addNewGoal = view.findViewById(R.id.addNewGoal);
+        addNewGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), AddNewGoal.class);
+                startActivity(intent);
+            }
+        });
+
+        loadGoal();
         loadExpense();
 
         return view;
@@ -281,6 +302,50 @@ public class BudgetFragment extends Fragment {
                         Log.e(TAG, "Error deleting expenses: " + e.getMessage());
                     }
                 });
+    }
+
+    private void loadGoal() {
+        fStore.collection("goals")
+                .whereEqualTo("userID", userID)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.w(TAG, "Listen failed.", error);
+                            return;
+                        }
+
+                        goalList.clear(); // Clear old data before updating
+
+                        // Check if there are expenses
+                        if (!value.isEmpty()) {
+                            for (QueryDocumentSnapshot document : value) {
+                                processGoalDocument(document);
+                            }
+                        }
+                        if (GoalAdapter == null) {
+                            GoalAdapter = new GoalAdapter(BudgetFragment.this, R.layout.item_goal, goalList);
+                            goalListView.setAdapter(GoalAdapter);
+                            if (goalList.isEmpty()) noGoal.setVisibility(View.VISIBLE);
+                            else noGoal.setVisibility(View.GONE);
+                        } else {
+                            GoalAdapter.notifyDataSetChanged(); // Cập nhật ListView nếu adapter đã được khởi tạo trước đó
+                        }
+                    }
+                });
+    }
+
+    private void processGoalDocument(QueryDocumentSnapshot goalDocument) {
+        String goalID = goalDocument.getId();
+        String goalName = goalDocument.getString("goalName");
+        Number goalImageIndex = goalDocument.getLong("goalImage");
+        int goalImage = goalImageIndex.intValue();
+        String date = goalDocument.getString("date");
+
+        Long goalNumber = goalDocument.getLong("goalNumber");
+        Long goalCurrent = goalDocument.getLong("goalCurrent");
+
+        goalList.add(new Goal(goalID, userID, goalName, goalCurrent, goalNumber, goalImage, date));
     }
 
 }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="70dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,7 +46,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/chartRevenueBox"
                 android:layout_width="317dp"
-                android:layout_height="420dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/border_shadow"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -63,11 +64,12 @@
                 <ListView
                     android:id="@+id/recentRevenue"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
+                    app:layout_constraintTop_toBottomOf="@id/pieChartRevenue"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="24dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -99,7 +101,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/chartExpenseBox"
                 android:layout_width="317dp"
-                android:layout_height="420dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/border_shadow"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -117,10 +119,12 @@
                 <ListView
                     android:id="@+id/recentExpense"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
+                    app:layout_constraintTop_toBottomOf="@+id/pieChartExpense"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="24dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

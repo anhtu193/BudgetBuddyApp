@@ -4,11 +4,13 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -80,6 +82,23 @@ public class ExpenseEditScreen extends AppCompatActivity {
             binding.expenseName.setText(expenseName);
             binding.expenseTime.setText(expenseTime);
             binding.expenseImage.setImageResource(categoryImages[expenseImage]);
+
+            ProgressBar progressBar = binding.progressBar;
+            int CurrentProgress = (int) ((float) expenseCurrent / expenseLeft * 100);
+
+            if (CurrentProgress >= 100) {
+                CurrentProgress = 100;
+                progressBar.getProgressDrawable().setColorFilter(
+                        Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+                binding.expenseCurrent.setTextColor(Color.RED);
+                binding.reachLimit.setVisibility(View.VISIBLE);
+            } else {
+                binding.expenseCurrent.setTextColor(Color.BLACK);
+                binding.reachLimit.setVisibility(View.GONE);
+            }
+
+            progressBar.setProgress(CurrentProgress);
+
             binding.expenseLimit.setText(String.format("%,d", expenseLimit) + " đ");
             binding.expenseCurrent.setText(String.format("%,d", expenseCurrent));
             binding.expenseLimitRemaining.setText(String.format("%,d", expenseLeft));

@@ -3,22 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="24dp">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ellipse" />
-
-        <ImageView
             android:id="@+id/goalImage"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/smartphone"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:src="@drawable/food"
             android:layout_gravity="center"/>
 
     </FrameLayout>
@@ -39,11 +35,13 @@
             android:textColor="@color/black"/>
 
         <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="match_parent"
             android:layout_height="4dp"
             style="?android:attr/progressBarStyleHorizontal"
-            android:progressDrawable="@drawable/custom_progress_bg"
-            android:layout_marginTop="12dp"/>
+            android:progressDrawable="@drawable/custom_progress_bar"
+            android:layout_marginTop="12dp"
+            android:max="100"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,6 +50,7 @@
             android:layout_marginTop="5dp">
 
             <TextView
+                android:id="@+id/goalCurrent"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/green"
@@ -62,6 +61,7 @@
                 android:text="17,500,000"/>
 
             <TextView
+                android:id="@+id/goalNumber"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/green"
@@ -71,6 +71,8 @@
                 android:text="35,000,000"/>
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 
