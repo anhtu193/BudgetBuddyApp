@@ -41,7 +41,6 @@ public class CategoryHome extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager2.setCurrentItem(tab.getPosition());
-
             }
 
             @Override
@@ -51,7 +50,6 @@ public class CategoryHome extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 

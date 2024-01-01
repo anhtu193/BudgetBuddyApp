@@ -3,6 +3,7 @@ package com.example.budgetbuddyapp;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.ColorRes;
@@ -27,9 +28,15 @@ import com.example.budgetbuddyapp.transaction.TransactionInfo;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import androidx.annotation.NonNull;
@@ -47,6 +54,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,9 +73,14 @@ public class ReportFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private LineChart lineChart;
     private List<String> xValues;
-    double cFirst, tFirst, cSecond, tSecond, cThird, tThird, cFourth, tFourth, cFifth, tFifth, cSixth, tSixth, cToday, tToday;
+
+    private List<Float> outcome7days = new ArrayList<>();
+    private List<Float> income7days = new ArrayList<>();
+    float maxHeight = 0;
+    List<String> sevenDays;
     PieChart pieChartExpense, pieChartRevenue;
     TextView tv_expense_number, tv_revenue_number;
     ListView revenueListView, expenseListView;
@@ -114,7 +127,174 @@ public class ReportFragment extends Fragment {
         fetchDataAndUpdateChart(pieChartRevenue, revenueListView, "Thu nhập");
         fetchDataAndUpdateChart(pieChartExpense, expenseListView, "Chi tiêu");
 
+        lineChart = view.findViewById(R.id.linechart);
+
+        initLinechart();
         return view;
+    }
+
+    private void initLinechart() {
+        // List to store 7 days
+        sevenDays = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.setTime(new Date());
+
+            calendar.add(Calendar.DAY_OF_YEAR, -i);
+
+            // Format the date as "dd-MM-yyyy"
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            final String dateString = dateFormat.format(calendar.getTime());
+
+            sevenDays.add(dateString);
+            income7days.add(0f);
+            outcome7days.add(0f);
+        }
+
+
+
+        Description description = new Description();
+        description.setText("");
+        description.setPosition(150f, 15f);
+        lineChart.setDescription(description);
+        lineChart.getAxisRight().setDrawLabels(false);
+
+        xValues = Arrays.asList(sevenDays.get(6).substring(0,5), sevenDays.get(5).substring(0,5), sevenDays.get(4).substring(0,5), sevenDays.get(3).substring(0,5), sevenDays.get(2).substring(0,5), sevenDays.get(1).substring(0,5), sevenDays.get(0).substring(0,5));
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues));
+        xAxis.setLabelCount(7);
+        xAxis.setGranularity(1f);
+
+        getDataFromFirestore();
+    }
+
+    private String getCatgoryType(String categoryId) {
+        final String[] categoryType = {""};
+        fStore.collection("categories")
+                .whereEqualTo("userID", userID)
+                .whereEqualTo("categoryId", categoryId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                categoryType[0] = document.getString("categoryType");
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+
+        return categoryType[0];
+    }
+
+    private void getDataFromFirestore() {
+        for (int i = 0; i < 7; i++)
+        {
+            final int index = i;
+            fStore.collection("transactions")
+                    .whereEqualTo("userID", userID)
+                    .whereEqualTo("date", sevenDays.get(i))
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if (error != null) {
+                                Log.e(TAG, "Lỗi khi lấy dữ liệu: ", error);
+                                return;
+                            }
+                            final float[] outcomeTotal = {0}; //biến lưu tổng thu nhập của những thu ngập trong ngày này
+                            final float[] incomeTotal = {0};
+                            for (DocumentSnapshot doc : value.getDocuments()) {
+                                String categoryId = doc.getString("categoryId");
+                                final String[] categoryType = {""};
+                                fStore.collection("categories")
+                                        .whereEqualTo("userID", userID)
+                                        .whereEqualTo("categoryId", categoryId)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                        categoryType[0] = document.getString("categoryType");
+                                                        if (categoryType[0].equals("Chi tiêu")) {
+                                                            Number outcome = (Number) doc.get("amount");
+                                                            outcomeTotal[0] += outcome.floatValue();
+                                                        }
+                                                        if (categoryType[0].equals("Thu nhập")) {
+                                                            Number income = (Number) doc.get("amount");
+                                                            incomeTotal[0] += income.floatValue();
+                                                        }
+                                                        if (maxHeight < outcomeTotal[0]) maxHeight = outcomeTotal[0];
+                                                        if (maxHeight < incomeTotal[0]) maxHeight = incomeTotal[0];
+                                                        income7days.set(index, incomeTotal[0]);
+                                                        outcome7days.set(index, outcomeTotal[0]); // sau khi tổng kết đưa vào biến
+
+                                                        updateLineChart();
+                                                    }
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
+
+
+                            }
+
+                        }
+                    });
+        }
+    }
+
+    private void updateLineChart() {
+        YAxis yAxis = lineChart.getAxisLeft();
+        yAxis.setAxisMinimum(0f);
+        yAxis.setAxisMaximum(maxHeight);
+        yAxis.setAxisLineWidth(2f);
+        yAxis.setAxisLineColor(Color.BLACK);
+        yAxis.setLabelCount(10);
+
+        List<Entry> incomeEntry = new ArrayList<>();
+        incomeEntry.add(new Entry(0, income7days.get(6)));
+        incomeEntry.add(new Entry(1, income7days.get(5)));
+        incomeEntry.add(new Entry(2, income7days.get(4)));
+        incomeEntry.add(new Entry(3, income7days.get(3)));
+        incomeEntry.add(new Entry(4, income7days.get(2)));
+        incomeEntry.add(new Entry(5, income7days.get(1)));
+        incomeEntry.add(new Entry(6, income7days.get(0)));
+
+        List<Entry> outcomeEntry = new ArrayList<>();
+        outcomeEntry.add(new Entry(0, outcome7days.get(6)));
+        outcomeEntry.add(new Entry(1, outcome7days.get(5)));
+        outcomeEntry.add(new Entry(2, outcome7days.get(4)));
+        outcomeEntry.add(new Entry(3, outcome7days.get(3)));
+        outcomeEntry.add(new Entry(4, outcome7days.get(2)));
+        outcomeEntry.add(new Entry(5, outcome7days.get(1)));
+        outcomeEntry.add(new Entry(6, outcome7days.get(0)));
+
+        LineDataSet dataSet = new LineDataSet(incomeEntry, "Thu nhập");
+        dataSet.setColors(Color.parseColor("#FF00BD40"));
+
+        LineDataSet dataSet1 = new LineDataSet(outcomeEntry, "Chi tiêu");
+        dataSet1.setColors(Color.parseColor("#FFFF1D1D"));
+
+        LineData lineData = new LineData(dataSet, dataSet1);
+        lineChart.setData(lineData);
+
+        lineChart.invalidate();
     }
 
     private void fetchDataAndUpdateChart(final PieChart pieChart, final ListView listView, final String type) {
@@ -229,11 +409,11 @@ public class ReportFragment extends Fragment {
         if (type.equals("Thu nhập")) {
             int color = ContextCompat.getColor(getContext(), R.color.earn);
             tv_revenue_number.setTextColor(color);
-            tv_revenue_number.setText(String.format("%,.2f", totalAmount));
+            tv_revenue_number.setText(String.format("%,.0f", totalAmount));
         } else {
             int color = ContextCompat.getColor(getContext(), R.color.spend);
             tv_expense_number.setTextColor(color);
-            tv_expense_number.setText(String.format("%,.2f", totalAmount));
+            tv_expense_number.setText(String.format("%,.0f", totalAmount));
         }
     }
 

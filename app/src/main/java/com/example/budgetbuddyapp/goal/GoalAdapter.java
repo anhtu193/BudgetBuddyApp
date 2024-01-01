@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class GoalAdapter extends ArrayAdapter<Goal> {
-
-
     private Fragment fragment;
     private List<Goal> goalList;
 

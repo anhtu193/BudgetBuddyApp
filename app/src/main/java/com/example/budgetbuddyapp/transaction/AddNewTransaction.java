@@ -387,7 +387,7 @@ public class AddNewTransaction extends AppCompatActivity {
     };
 
     private void updateDateInView() {
-        SimpleDateFormat sdf = new SimpleDateFormat("d-M-yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         date.setText(sdf.format(calendar.getTime()));
     }
 
