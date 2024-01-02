@@ -34,7 +34,7 @@
     <ListView
         android:id="@+id/transactionListView"
         android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="750dp"
         android:scrollbarStyle="insideInset"
         android:divider="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@id/titleRecentTransaction"/>

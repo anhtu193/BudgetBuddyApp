@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -82,7 +83,7 @@ public class ReportFragment extends Fragment {
     float maxHeight = 0;
     List<String> sevenDays;
     PieChart pieChartExpense, pieChartRevenue;
-    TextView tv_expense_number, tv_revenue_number;
+    TextView tv_expense_number, tv_revenue_number, balance;
     ListView revenueListView, expenseListView;
     public ReportFragment() {
         // Required empty public constructor
@@ -128,6 +129,18 @@ public class ReportFragment extends Fragment {
         fetchDataAndUpdateChart(pieChartExpense, expenseListView, "Chi tiêu");
 
         lineChart = view.findViewById(R.id.linechart);
+        balance = view.findViewById(R.id.balance);
+
+        DocumentReference documentReference = fStore.collection("users").document(userID);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()) {
+                    Long balanceValue = value.getLong("balance");
+                    balance.setText(balanceValue != null ? String.format("%,d", balanceValue) + " đ" : "");
+                }
+            }
+        });
 
         initLinechart();
         return view;
