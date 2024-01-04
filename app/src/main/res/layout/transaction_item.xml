@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/food"/>
+        android:src="@drawable/no_category_selected"/>
 
     <TextView
         android:id="@+id/categoryName"
