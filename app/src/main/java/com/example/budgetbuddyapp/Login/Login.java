@@ -80,9 +80,9 @@ public class Login extends AppCompatActivity {
                     }
 
                 } else if (email.isEmpty()) {
-                    loginEmail.setError("Email không thể trống");
+                    loginEmail.setError("Email không thể trống!");
                 } else {
-                    loginEmail.setError("Nhập email hợp lệ");
+                    loginEmail.setError("Email không tồn tại!");
                 }
             }
         });

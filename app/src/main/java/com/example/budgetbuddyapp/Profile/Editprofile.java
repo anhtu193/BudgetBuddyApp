@@ -86,9 +86,10 @@ public class Editprofile extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Toast.makeText(Editprofile.this, "Cập nhật tên người dùng thành công!", Toast.LENGTH_SHORT).show();
-                                    Intent refreshIntent = new Intent(Editprofile.this, Navigation.class);
-                                    refreshIntent.putExtra("selectedTab", 3);
-                                    startActivity(refreshIntent);
+//                                    Intent refreshIntent = new Intent(Editprofile.this, Navigation.class);
+//                                    refreshIntent.putExtra("selectedTab", 3);
+//                                    startActivity(refreshIntent);
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

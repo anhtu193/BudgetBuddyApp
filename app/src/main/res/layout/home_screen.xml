@@ -8,6 +8,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -42,223 +44,171 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtViewHello" />
 
-            <ImageView
-                android:id="@+id/imgViewNotification"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="48dp"
-                android:layout_marginRight="38dp"
-                android:src="@drawable/bell"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/balanceInformation"
-                android:layout_width="317dp"
-                android:layout_height="190dp"
-                app:layout_constraintTop_toBottomOf="@id/txtViewUserName"
+                android:layout_width="340dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/border_radius_15"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/border_radius_15">
+                app:layout_constraintTop_toBottomOf="@id/txtViewUserName">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SỐ DƯ"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="23dp"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/montserrat_semibold"/>
+                    android:layout_marginTop="23dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="SỐ DƯ"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/montserrat_medium"
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:fontFamily="@font/montserrat_medium"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginLeft="20dp"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/hideBalance"
                     android:layout_width="27dp"
                     android:layout_height="27dp"
-                    android:src="@drawable/balance_visible"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/balance"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="54dp"
-                    android:layout_marginLeft="8dp"/>
+                    android:src="@drawable/balance_visible"
+                    app:layout_constraintLeft_toRightOf="@id/balance"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-                <View
-                    android:layout_width="276dp"
-                    android:layout_height="1dp"
-                    app:layout_constraintTop_toBottomOf="@id/balance"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:background="@color/white"/>
-
-                <TextView
-                    android:id="@+id/categoryNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="6"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat_semibold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="107dp"
-                    android:layout_marginLeft="140dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Loại chi tiêu"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat_semibold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="106dp"
-                    android:layout_marginLeft="20dp"/>
-
-                <TextView
-                    android:id="@+id/budgetNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat_semibold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="132dp"
-                    android:layout_marginLeft="170dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Giới hạn chi tiêu"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat_semibold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="131dp"
-                    android:layout_marginLeft="20dp"/>
-
-                <TextView
-                    android:id="@+id/goalNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat_semibold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="156dp"
-                    android:layout_marginLeft="110dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mục tiêu"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat_semibold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="155dp"
-                    android:layout_marginLeft="20dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lịch sử giao dịch"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="13dp"
                 android:fontFamily="@font/montserrat_medium"
+                android:text="Lịch sử giao dịch"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/balanceInformation"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="13dp"
-                android:layout_marginLeft="35dp"/>
+                app:layout_constraintTop_toBottomOf="@id/balanceInformation" />
 
             <TextView
                 android:id="@+id/transactionViewAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xem tất cả"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="38dp"
                 android:fontFamily="@font/montserrat_medium"
+                android:text="Xem tất cả"
                 android:textColor="@color/green"
                 android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/balanceInformation"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="17dp"
-                android:layout_marginRight="38dp"/>
+                app:layout_constraintTop_toBottomOf="@id/balanceInformation" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/recentTrasactionBox"
-                android:layout_width="317dp"
+                android:layout_width="340dp"
                 android:layout_height="200dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/border_shadow"
-                app:layout_constraintTop_toBottomOf="@id/transactionViewAll"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="8dp">
-
+                app:layout_constraintTop_toBottomOf="@id/transactionViewAll">
+                <TextView
+                    android:id="@+id/noItem"
+                    android:layout_marginTop="65dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Có vẻ bạn tạo giao dịch nào cả, hãy tạo thêm giao dịch để theo dõi nhé!"
+                    android:textAlignment="center"
+                    android:lineHeight="25dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingHorizontal="20dp"
+                    android:textSize="16sp"
+                    />
                 <ListView
                     android:id="@+id/recentTrasactions"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent">
-
-<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:layout_width="317dp"-->
-<!--                        android:layout_height="200dp"-->
-<!--                        android:layout_marginTop="8dp"-->
-<!--                        android:background="@drawable/border_shadow">-->
-
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-                </ListView>
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ListView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loại chi tiêu"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="13dp"
                 android:fontFamily="@font/montserrat_medium"
+                android:text="Loại chi tiêu"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/recentTrasactionBox"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="13dp"
-                android:layout_marginLeft="35dp"/>
+                app:layout_constraintTop_toBottomOf="@id/recentTrasactionBox" />
 
             <TextView
                 android:id="@+id/categoryViewAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xem tất cả"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="38dp"
                 android:fontFamily="@font/montserrat_medium"
+                android:text="Xem tất cả"
                 android:textColor="@color/green"
                 android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/recentTrasactionBox"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="17dp"
-                android:layout_marginRight="38dp"/>
+                app:layout_constraintTop_toBottomOf="@id/recentTrasactionBox" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toBottomOf="@id/categoryViewAll"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="340dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/border_shadow">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                   app:layout_constraintTop_toBottomOf="@id/tabLayout"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tabLayout"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="2dp"
+                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tabTextColor="@color/green"
+                    app:tabIndicatorColor="@color/green"
+                    >
+
+                </com.google.android.material.tabs.TabLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -76,9 +76,7 @@ public class Register extends AppCompatActivity {
                             Map<String, Object> data = new HashMap<>();
                             data.put("fullname", fullname);
                             data.put("balance", 0);
-                            data.put("categories", 0);
-                            data.put("budgets", 0);
-                            data.put("goals",0);
+                            data.put("userID", userID);
                             documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -135,7 +133,7 @@ public class Register extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
     }

@@ -91,6 +91,7 @@
                             android:textColor="@color/black"/>
 
                         <Button
+                            android:id="@+id/addNewGoal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="12dp"
@@ -106,10 +107,24 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/noGoal"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        android:layout_marginTop="50dp"
+                        android:text="Có vẻ bạn chưa thêm mục tiêu nào cả, hãy thêm mục tiêu ngay nhé!"
+                        android:textColor="@color/black"/>
+
                     <!-- Item -->
                     <ListView
+                        android:id="@+id/goalListView"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                        android:layout_height="170dp"/>
 
                 </LinearLayout>
 
@@ -144,7 +159,7 @@
                     <ListView
                         android:id="@+id/expenseListView"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="320dp"
                         android:layout_marginTop="8dp" />
 
                 </LinearLayout>

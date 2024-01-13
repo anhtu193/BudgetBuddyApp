@@ -143,9 +143,10 @@ public class AddNewExpense extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Log.d(TAG, "Tạo giới hạn chi tiêu thành công! Id: " + expenseId);
-                                        Intent refreshIntent = new Intent(AddNewExpense.this, Navigation.class);
-                                        refreshIntent.putExtra("selectedTab", 2);
-                                        startActivity(refreshIntent);
+//                                        Intent refreshIntent = new Intent(AddNewExpense.this, Navigation.class);
+//                                        refreshIntent.putExtra("selectedTab", 2);
+//                                        startActivity(refreshIntent);
+                                        finish();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

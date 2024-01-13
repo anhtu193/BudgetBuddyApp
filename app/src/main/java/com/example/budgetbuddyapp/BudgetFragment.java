@@ -1,16 +1,18 @@
 package com.example.budgetbuddyapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,10 +20,13 @@ import android.widget.TextView;
 import com.example.budgetbuddyapp.expense.Expense;
 import com.example.budgetbuddyapp.expense.ExpenseAdapter;
 import com.example.budgetbuddyapp.expense.ExpenseProgress;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.budgetbuddyapp.goal.AddNewGoal;
+import com.example.budgetbuddyapp.goal.GoalAdapter;
+import com.example.budgetbuddyapp.goal.Goal;
+import com.example.budgetbuddyapp.transaction.RecentTransaction;
+import com.example.budgetbuddyapp.transaction.TransactionAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -39,7 +44,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class BudgetFragment extends Fragment {
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -51,10 +55,14 @@ public class BudgetFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseFirestore fStore;
     String userID;
-    ListView expenseListView;
+    ListView expenseListView, goalListView;
     ArrayList<Expense> expenseList;
-    TextView balance, noExpense;
+    ArrayList<Goal> goalList;
+    TextView balance, noExpense, noGoal;
+    Button addNewGoal;
+    View view;
     com.example.budgetbuddyapp.expense.ExpenseAdapter ExpenseAdapter;
+    com.example.budgetbuddyapp.goal.GoalAdapter GoalAdapter;
     private static final int REQUEST_CODE = 1;
     ImageView addExpenseButton;
     public BudgetFragment() {
@@ -82,7 +90,7 @@ public class BudgetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ui_budget, container, false);
+        view = inflater.inflate(R.layout.ui_budget, container, false);
 
         auth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -90,7 +98,11 @@ public class BudgetFragment extends Fragment {
 
         expenseListView = view.findViewById(R.id.expenseListView);
         noExpense = view.findViewById(R.id.noExpense);
-        expenseList = new ArrayList<>();
+        expenseList = new ArrayList<Expense>();
+
+        goalListView = view.findViewById(R.id.goalListView);
+        noGoal = view.findViewById(R.id.noGoal);
+        goalList = new ArrayList<Goal>();
 
         balance = view.findViewById(R.id.balance);
         DocumentReference documentReference = fStore.collection("users").document(userID);
@@ -103,6 +115,17 @@ public class BudgetFragment extends Fragment {
                 }
             }
         });
+
+        addNewGoal = view.findViewById(R.id.addNewGoal);
+        addNewGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), AddNewGoal.class);
+                startActivity(intent);
+            }
+        });
+
+        loadGoal();
 
         loadExpense();
 
@@ -131,19 +154,35 @@ public class BudgetFragment extends Fragment {
                                 if (!document.getString("expenseTime").equals(currentMonthYear)) {
                                     deleteExpenseWhenEndMonth();
                                 }
-                                processExpenseDocument(document);
+//                                processExpenseDocument(document);
+                                String expenseID = document.getId();
+                                String expenseTime = document.getString("expenseTime");
+                                String expenseName = document.getString("expenseName");
+                                Number expenseImageIndex = document.getLong("expenseImage");
+                                Number expenseCurrentN = document.getLong("expenseCurrent");
+                                int expenseCurrent = expenseCurrentN.intValue();
+                                int expenseImage = expenseImageIndex.intValue();
+                                String categoryID = document.getString("categoryID");
+                                // Ensure to use the correct method based on the actual data type in Firestore
+                                Object limitValue = document.get("expenseLimit");
+                                int expenseLimit = (limitValue instanceof Number) ? ((Number) limitValue).intValue() : 0;
+
+                                if (expenseLimit == 0)
+                                {
+                                    expenseList.add(new Expense(expenseID, userID, expenseName, expenseImage, categoryID));
+                                }
+                                else
+                                {
+                                    expenseList.add(new ExpenseProgress(expenseID, userID, expenseName, expenseImage, categoryID, expenseTime, expenseLimit, expenseCurrent));
+                                }
                             }
                         }
-                        if (ExpenseAdapter == null) {
-                            // Adapter not initialized, create and set it
-                            ExpenseAdapter = new ExpenseAdapter(BudgetFragment.this, R.layout.item_expense, expenseList);
-                            expenseListView.setAdapter(ExpenseAdapter);
-                            if (expenseList.isEmpty()) noExpense.setVisibility(View.VISIBLE);
-                            else noExpense.setVisibility(View.GONE);
-                        } else {
-                            // Adapter already initialized, notify data set changed
-                            ExpenseAdapter.notifyDataSetChanged();
-                        }
+                        if (expenseList.isEmpty()) noExpense.setVisibility(View.VISIBLE);
+                        else noExpense.setVisibility(View.GONE);
+
+                        ExpenseAdapter = new ExpenseAdapter(view.getContext(), R.layout.item_expense, expenseList);
+                        expenseListView.setAdapter(ExpenseAdapter);
+
 
                         // Load categories regardless of whether there are expenses or not
 //                        fStore.collection("categories")
@@ -205,48 +244,48 @@ public class BudgetFragment extends Fragment {
 //        }
 //        return false;
 //    }
-    private void processExpenseDocument(QueryDocumentSnapshot expenseDocument) {
-        String expenseID = expenseDocument.getId();
-        String expenseTime = expenseDocument.getString("expenseTime");
-        String expenseName = expenseDocument.getString("expenseName");
-        Number expenseImageIndex = expenseDocument.getLong("expenseImage");
-        int expenseImage = expenseImageIndex.intValue();
-        String categoryID = expenseDocument.getString("categoryID");
-        // Ensure to use the correct method based on the actual data type in Firestore
-        Object limitValue = expenseDocument.get("expenseLimit");
-        int expenseLimit = (limitValue instanceof Number) ? ((Number) limitValue).intValue() : 0;
-
-        if (expenseLimit == 0)
-        {
-            expenseList.add(new Expense(expenseID, userID, expenseName, expenseImage, categoryID));
-        }
-        else
-        {
-            expenseList.add(new ExpenseProgress(expenseID, userID, expenseName, expenseImage, categoryID, expenseTime, expenseLimit));
-        }
-//        fStore.collection("categories")
-//                .whereEqualTo("userID", userID)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//    private void processExpenseDocument(QueryDocumentSnapshot expenseDocument) {
+//        String expenseID = expenseDocument.getId();
+//        String expenseTime = expenseDocument.getString("expenseTime");
+//        String expenseName = expenseDocument.getString("expenseName");
+//        Number expenseImageIndex = expenseDocument.getLong("expenseImage");
+//        int expenseImage = expenseImageIndex.intValue();
+//        String categoryID = expenseDocument.getString("categoryID");
+//        // Ensure to use the correct method based on the actual data type in Firestore
+//        Object limitValue = expenseDocument.get("expenseLimit");
+//        int expenseLimit = (limitValue instanceof Number) ? ((Number) limitValue).intValue() : 0;
 //
-//                        if (task.isSuccessful()) {
-//
-//                            for (QueryDocumentSnapshot categoryDocument : task.getResult()) {
-//                                if (categoryID.equals(categoryDocument.getId())) {
-//                                    String expenseName = categoryDocument.getString("categoryName");
-//                                    Number categoryImageIndex = categoryDocument.getLong("categoryImage");
-//                                    int expenseImage = categoryImageIndex.intValue();
-//                                    expenseList.add(new ExpenseProgress(expenseID, userID, expenseName, expenseImage, categoryID, expenseTime, expenseLimit));
-//                                }
-//                            }
-//                        } else {
-//                            Log.e(TAG, "Error getting categories: ", task.getException());
-//                        }
-//                    }
-//                });
-    }
+//        if (expenseLimit == 0)
+//        {
+//            expenseList.add(new Expense(expenseID, userID, expenseName, expenseImage, categoryID));
+//        }
+//        else
+//        {
+//            expenseList.add(new ExpenseProgress(expenseID, userID, expenseName, expenseImage, categoryID, expenseTime, expenseLimit));
+//        }
+////        fStore.collection("categories")
+////                .whereEqualTo("userID", userID)
+////                .get()
+////                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+////                    @Override
+////                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+////
+////                        if (task.isSuccessful()) {
+////
+////                            for (QueryDocumentSnapshot categoryDocument : task.getResult()) {
+////                                if (categoryID.equals(categoryDocument.getId())) {
+////                                    String expenseName = categoryDocument.getString("categoryName");
+////                                    Number categoryImageIndex = categoryDocument.getLong("categoryImage");
+////                                    int expenseImage = categoryImageIndex.intValue();
+////                                    expenseList.add(new ExpenseProgress(expenseID, userID, expenseName, expenseImage, categoryID, expenseTime, expenseLimit));
+////                                }
+////                            }
+////                        } else {
+////                            Log.e(TAG, "Error getting categories: ", task.getException());
+////                        }
+////                    }
+////                });
+//    }
 
     private void deleteExpenseWhenEndMonth() {
 
@@ -283,4 +322,59 @@ public class BudgetFragment extends Fragment {
                 });
     }
 
+    private void loadGoal() {
+        fStore.collection("goals")
+                .whereEqualTo("userID", userID)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.w(TAG, "Listen failed.", error);
+                            return;
+                        }
+
+                        goalList.clear(); // Clear old data before updating
+
+                        // Check if there are expenses
+                        if (!value.isEmpty()) {
+                            for (QueryDocumentSnapshot document : value) {
+//                                processGoalDocument(document);
+                                String goalID = document.getId();
+                                String goalName = document.getString("goalName");
+                                Number goalImageIndex = document.getLong("goalImage");
+                                int goalImage = goalImageIndex.intValue();
+                                String date = document.getString("date");
+
+                                Long goalNumber = document.getLong("goalNumber");
+                                Long goalCurrent = document.getLong("goalCurrent");
+
+                                goalList.add(new Goal(goalID, userID, goalName, goalCurrent, goalNumber, goalImage, date));
+                            }
+                        }
+                        if (goalList.isEmpty()) noGoal.setVisibility(View.VISIBLE);
+                        else noGoal.setVisibility(View.GONE);
+
+                        GoalAdapter = new GoalAdapter(BudgetFragment.this, R.layout.item_goal, goalList);
+                        goalListView.setAdapter(GoalAdapter);
+                    }
+                });
+    }
+
+    private void processGoalDocument(QueryDocumentSnapshot goalDocument) {
+        String goalID = goalDocument.getId();
+        String goalName = goalDocument.getString("goalName");
+        Number goalImageIndex = goalDocument.getLong("goalImage");
+        int goalImage = goalImageIndex.intValue();
+        String date = goalDocument.getString("date");
+
+        Long goalNumber = goalDocument.getLong("goalNumber");
+        Long goalCurrent = goalDocument.getLong("goalCurrent");
+
+        goalList.add(new Goal(goalID, userID, goalName, goalCurrent, goalNumber, goalImage, date));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

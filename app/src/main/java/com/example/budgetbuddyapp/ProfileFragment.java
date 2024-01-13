@@ -2,6 +2,8 @@ package com.example.budgetbuddyapp;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.budgetbuddyapp.Login.ForgotPassword;
 import com.example.budgetbuddyapp.Login.Login;
 import com.example.budgetbuddyapp.Profile.ChangePassword;
 import com.example.budgetbuddyapp.Profile.Editprofile;
@@ -109,8 +113,7 @@ public class ProfileFragment extends Fragment {
         changepassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ChangePassword.class);
-                startActivity(intent);
+                startActivity(new Intent(getContext(), ForgotPassword.class));
             }
         });
 
@@ -118,7 +121,21 @@ public class ProfileFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showSignOutConfirmationDialog();
+            }
+        });
 
+
+        return view;
+    }
+    private void showSignOutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Đăng xuất");
+        builder.setMessage("Đăng xuất ra khỏi tài khoản hiện tại?");
+
+        builder.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("name", "");
@@ -128,10 +145,19 @@ public class ProfileFragment extends Fragment {
 
                 Intent intent = new Intent(getContext(), Login.class);
                 startActivity(intent);
+                Toast.makeText(getContext(), "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Nếu người dùng không muốn đăng xuất, hoặc hủy bỏ hộp thoại
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
-        return view;
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

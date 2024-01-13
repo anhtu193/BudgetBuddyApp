@@ -32,8 +32,8 @@
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bạn có muốn xóa mục tiêu này không?"
             android:fontFamily="@font/montserrat_regular"
+            android:text="Bạn có muốn xóa mục tiêu này không?"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
 
@@ -43,22 +43,29 @@
             android:orientation="horizontal"
             android:layout_gravity="right">
 
-            <TextView
+            <Button
+                android:id="@+id/deleteButton"
                 android:textStyle="bold"
                 android:textSize="16sp"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
                 android:textColor="@color/red"
-                android:fontFamily="@font/montserrat_semibold"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/montserrat_semibold"
                 android:layout_height="wrap_content"
                 android:text="Xóa"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="0dp"/>
 
-            <TextView
+            <Button
+                android:id="@+id/cancelButton"
                 android:textStyle="bold"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
                 android:textSize="16sp"
-                android:fontFamily="@font/montserrat_semibold"
+                android:textColor="#6C6C6C"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semibold"
                 android:text="Hủy bỏ"/>
 
         </LinearLayout>

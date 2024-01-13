@@ -170,10 +170,8 @@ public class ExpenseEdit extends AppCompatActivity {
                         Log.d(TAG, "Cập nhật giới hạn chi tiêu thành công!");
 
                         // Refresh the BudgetHome activity
-                        Intent refreshIntent = new Intent(ExpenseEdit.this, Navigation.class);
-                        refreshIntent.putExtra("selectedTab", 2);
-                        startActivity(refreshIntent);
 
+                        finish();
                     }
                 })
                  .addOnFailureListener(new OnFailureListener() {
