@@ -184,9 +184,10 @@ public class ExpenseEditScreen extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void unused) {
                             Log.d(ContentValues.TAG, "Xóa/Reset giới hạn chi tiêu thành công! ID:" +expenseID);
-                            Intent refreshIntent = new Intent(ExpenseEditScreen.this, Navigation.class);
-                            refreshIntent.putExtra("selectedTab", 2);
-                            startActivity(refreshIntent);
+//                            Intent refreshIntent = new Intent(ExpenseEditScreen.this, Navigation.class);
+//                            refreshIntent.putExtra("selectedTab", 2);
+//                            startActivity(refreshIntent);
+                            finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
