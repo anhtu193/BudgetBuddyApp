@@ -1,6 +1,6 @@
 # BudgetBuddy
 Ứng dụng quản lý chi tiêu trên nền tảng di động Android.
-# Nhóm Last Fire
+# Nhóm 16 - Môn Phát triển ứng dụng trên thiết bị di động - NT118.O12
 - Nguyễn Đăng Duy - 21520773
 - Huỳnh Quốc Quân - 21522489
 - Lý Thanh Tú Anh - 21521823
