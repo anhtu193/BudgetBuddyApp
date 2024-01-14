@@ -210,7 +210,6 @@ public class GoalFund extends AppCompatActivity {
 //                                            Intent refreshIntent = new Intent(GoalFund.this, Navigation.class);
 //                                            refreshIntent.putExtra("selectedTab", 2);
 //                                            startActivity(refreshIntent);
-                                            finish();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -295,10 +294,10 @@ public class GoalFund extends AppCompatActivity {
                         updateUserBalance(inputGoalCurrent, "update");
 
                         // Refresh the BudgetHome activity
-                        Intent refreshIntent = new Intent(GoalFund.this, Navigation.class);
-                        refreshIntent.putExtra("selectedTab", 2);
-                        startActivity(refreshIntent);
-
+//                        Intent refreshIntent = new Intent(GoalFund.this, Navigation.class);
+//                        refreshIntent.putExtra("selectedTab", 2);
+//                        startActivity(refreshIntent);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

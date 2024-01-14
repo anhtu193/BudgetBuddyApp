@@ -129,8 +129,7 @@ public class AddNewGoal extends AppCompatActivity {
                             // Refresh the BudgetHome activity
 //                            Intent refreshIntent = new Intent(AddNewGoal.this, Navigation.class);
 //                            refreshIntent.putExtra("selectedTab", 2);
-//                            startActivity(refreshIntent);
-                            finish();
+//                            startActivity(refreshIntent
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
